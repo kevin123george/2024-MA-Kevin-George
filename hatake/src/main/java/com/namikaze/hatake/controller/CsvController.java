@@ -24,9 +24,10 @@ public class CsvController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CsvEntity>> getAll() {
+    public long getAll() {
         List<CsvEntity> csvEntities = csvService.getAllCsv();
-        return ResponseEntity.ok(csvEntities);
+        System.out.println(csvEntities);
+        return csvEntities.stream().count();
     }
 
 }
