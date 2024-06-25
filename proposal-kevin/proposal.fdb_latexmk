@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1718964319 "c:/Users/hikev/Desktop/2024-MA-Kevin-George/proposal-kevin/proposal.tex" "proposal.pdf" "proposal" 1718964320 0
+["pdflatex"] 1719314064 "c:/Users/hikev/Desktop/2024-MA-Kevin-George/proposal-kevin/proposal.tex" "proposal.pdf" "proposal" 1719314066 0
   "C:/Users/hikev/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1718794833 183313 016fe215503b8d05879efa7278a06516 ""
   "C:/Users/hikev/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1200.pk" 1718269429 14064 aee98f99965e58771cce051429f4d713 ""
   "C:/Users/hikev/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1693039713 23180290 f05261733b019e7e4ae8e1ade64979a6 ""
@@ -60,10 +60,10 @@
   "C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/tex/latex/refcount/refcount.sty" 1576437552 9878 9e94e8fa600d95f9c7731bb21dfb67a4 ""
   "C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/tex/latex/rerunfilecheck/rerunfilecheck.sty" 1657800696 9714 ba3194bd52c8499b3f1e3eb91d409670 ""
   "C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/tex/latex/url/url.sty" 1388494052 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
-  "c:/Users/hikev/Desktop/2024-MA-Kevin-George/proposal-kevin/proposal.tex" 1718964316 5089 f5d8fd415cc8daffd0c2382bd15fc2f1 ""
-  "proposal.aux" 1718964320 554 dd2b48f1aba1e3b725040b4d3abf7fbe "pdflatex"
-  "proposal.out" 1718964320 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "proposal.tex" 1718964316 5089 f5d8fd415cc8daffd0c2382bd15fc2f1 ""
+  "c:/Users/hikev/Desktop/2024-MA-Kevin-George/proposal-kevin/proposal.tex" 1719314064 4830 d23caddb9bf8dc565c3c0966eb18c9e1 ""
+  "proposal.aux" 1719314066 554 dd2b48f1aba1e3b725040b4d3abf7fbe "pdflatex"
+  "proposal.out" 1719314066 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "proposal.tex" 1719314064 4830 d23caddb9bf8dc565c3c0966eb18c9e1 ""
   (generated)
   "proposal.aux"
   "proposal.log"
