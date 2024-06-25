@@ -3,12 +3,8 @@ package com.hatake.cattleDB.mapper;
 import com.hatake.cattleDB.dtos.EventResponse;
 import com.hatake.cattleDB.models.EventEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 
 @Mapper(componentModel = "spring")

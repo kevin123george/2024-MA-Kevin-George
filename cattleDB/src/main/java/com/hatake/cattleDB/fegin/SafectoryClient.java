@@ -1,7 +1,6 @@
 package com.hatake.cattleDB.fegin;
 
-import com.hatake.cattleDB.dtos.EventRequest;
-import com.hatake.cattleDB.dtos.EventResponse;
+import com.hatake.cattleDB.dtos.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,5 +14,17 @@ public interface SafectoryClient {
     List<EventResponse> getEvents(
             @RequestHeader("Authorization") String authorization,
             @RequestBody EventRequest request
+    );
+
+    @PostMapping("/api/reports/route")
+    List<RouteResponse> getRoutes(
+            @RequestHeader("Authorization") String authorization,
+            @RequestBody RouteRequest request
+    );
+
+    @PostMapping("/api/reports/summary")
+    List<SummaryResponse> getSummary(
+            @RequestHeader("Authorization") String authorization,
+            @RequestBody SummaryRequest request
     );
 }

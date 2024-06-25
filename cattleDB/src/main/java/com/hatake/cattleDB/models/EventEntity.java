@@ -1,15 +1,12 @@
 package com.hatake.cattleDB.models;
 
-import com.fasterxml.jackson.annotation.JsonRawValue;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 @Entity

@@ -4,7 +4,6 @@ package com.hatake.cattleDB.service;
 import com.hatake.cattleDB.dtos.EventRequest;
 import com.hatake.cattleDB.dtos.EventResponse;
 import com.hatake.cattleDB.fegin.SafectoryClient;
-import com.hatake.cattleDB.mapper.EventMapper;
 import com.hatake.cattleDB.models.EventEntity;
 import com.hatake.cattleDB.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ public class EventService {
 
 
     public List<EventResponse> fetchEvents() {
-        String authorization = "Basic sdfsdfsdf";
+        String authorization = "Basic asdfsdfsdfsdfsdfdsfsdfsdfszIQ==";
         EventRequest request = new EventRequest();
         request.setDeviceId(Collections.singletonList(0));
         request.setTrackableId(Collections.emptyList());
