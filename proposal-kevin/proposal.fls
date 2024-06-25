@@ -525,9 +525,9 @@ OUTPUT proposal.out
 OUTPUT proposal.pdf
 INPUT C:\Users\hikev\AppData\Local\Programs\MiKTeXNew\fonts\tfm\public\cm\cmr17.tfm
 INPUT C:\Users\hikev\AppData\Local\Programs\MiKTeXNew\fonts\tfm\public\cm\cmbx12.tfm
-INPUT C:\Users\hikev\AppData\Local\Programs\MiKTeXNew\fonts\tfm\public\cm\cmr17.tfm
 INPUT C:\Users\hikev\AppData\Local\Programs\MiKTeXNew\fonts\tfm\public\cm\cmr12.tfm
 INPUT C:\Users\hikev\AppData\Local\MiKTeX\fonts\map\pdftex\pdftex.map
+INPUT C:\Users\hikev\AppData\Local\Programs\MiKTeXNew\fonts\tfm\public\cm\cmr17.tfm
 INPUT C:\Users\hikev\AppData\Local\Programs\MiKTeXNew\fonts\tfm\public\cm\cmbx12.tfm
 INPUT C:\Users\hikev\AppData\Local\Programs\MiKTeXNew\fonts\tfm\jknappen\ec\tcrm1200.tfm
 INPUT C:\Users\hikev\AppData\Local\Programs\MiKTeXNew\fonts\tfm\public\cm\cmbx12.tfm
@@ -540,5 +540,3 @@ INPUT C:\Users\hikev\AppData\Local\Programs\MiKTeXNew\fonts\type1\public\amsfont
 INPUT C:\Users\hikev\AppData\Local\Programs\MiKTeXNew\fonts\type1\public\amsfonts\cm\cmbx12.pfb
 INPUT C:\Users\hikev\AppData\Local\Programs\MiKTeXNew\fonts\type1\public\amsfonts\cm\cmr12.pfb
 INPUT C:\Users\hikev\AppData\Local\Programs\MiKTeXNew\fonts\type1\public\amsfonts\cm\cmr12.pfb
-INPUT C:\Users\hikev\AppData\Local\Programs\MiKTeXNew\fonts\type1\public\amsfonts\cm\cmr17.pfb
-INPUT C:\Users\hikev\AppData\Local\Programs\MiKTeXNew\fonts\type1\public\amsfonts\cm\cmr17.pfb

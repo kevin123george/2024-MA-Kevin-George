@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2023.8.26)  25 JUN 2024 13:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2023.8.26)  25 JUN 2024 13:38
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -328,7 +328,7 @@ Package hyperref Info: Link coloring OFF on input line 13.
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.58     \item \textbf
+l.59     \item \textbf
                       {Analytic Reporting Tools:} Create tools for deriving ... [1] [2] (proposal.aux)
 Package rerunfilecheck Info: File `proposal.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
@@ -341,10 +341,10 @@ Here is how much of TeX's memory you used:
  514739 words of font info for 40 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,5n,76p,388b,545s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\hikev\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on proposal.pdf (3 pages, 54757 bytes).
+ <C:\Users\hikev\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmr12.pfb>
+Output written on proposal.pdf (3 pages, 44862 bytes).
 PDF statistics:
- 48 PDF objects out of 1000 (max. 8388607)
+ 43 PDF objects out of 1000 (max. 8388607)
  11 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
