@@ -1,14 +1,16 @@
 package com.hatake.cattleDB.controller;
 
+import com.hatake.cattleDB.models.SummaryEntity;
 import com.hatake.cattleDB.service.RouteService;
 import com.hatake.cattleDB.service.SummaryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/reports")
+@CrossOrigin("http://localhost:3000/")
 public class RouteController {
 
     @Autowired
@@ -22,7 +24,6 @@ public class RouteController {
     ) {
 
         routeService.fetchRoutes();
-        // Implement your logic here
         return "Route data processed";
     }
 
@@ -31,7 +32,11 @@ public class RouteController {
     ) {
 
         summaryService.fetchSummary();
-        // Implement your logic here
         return "Route data processed";
+    }
+
+    @GetMapping("/summary")
+    public List<SummaryEntity> getAllSummary(){
+        return summaryService.getAllSummaryEntities();
     }
 }

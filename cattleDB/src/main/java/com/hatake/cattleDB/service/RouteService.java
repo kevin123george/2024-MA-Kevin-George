@@ -22,7 +22,7 @@ public class RouteService {
     private RouteRepository routeRepository;
 
     public void fetchRoutes() {
-        String authorization = "Basic asdfsdfsdfsdfsdfdsfsdfsdfszIQ==";
+        String authorization = "Basic ==";
         RouteRequest request = buildRouteRequest();
 
         List<RouteResponse> routes = safectoryClient.getRoutes(authorization, request);

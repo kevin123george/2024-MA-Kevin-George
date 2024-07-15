@@ -24,7 +24,7 @@ public class SummaryService {
 
 
     public void fetchSummary() {
-        String authorization = "Basic asdfsdfsdfsdfsdfdsfsdfsdfszIQ==";
+        String authorization = "Basic ==";
         SummaryRequest request = buildSummaryRequest();
 
         List<SummaryResponse> routes = safectoryClient.getSummary(authorization, request);
@@ -35,6 +35,10 @@ public class SummaryService {
 
 
         System.out.println(routes);
+    }
+
+    public List<SummaryEntity> getAllSummaryEntities(){
+        return summaryRepository.findAll();
     }
 
 
