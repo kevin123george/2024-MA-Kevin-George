@@ -1,12 +1,12 @@
-\documentclass[12pt]{article}
+\documentclass[11pt]{article}
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{enumitem}
 \usepackage{geometry}
-\geometry{a4paper, margin=1in}
+\geometry{a4paper, margin=0.75in}
 
-\title{Data-Driven Agricultural Decision Making: A Platform for Anomaly Detection, Analytic Reporting, and Simulation}
+\title{Data-Driven Agricultural Decision Making: Anomaly Detection, Analytics, and Simulation in Cattle Farms}
 \author{Kevin George}
 \date{\today}
 
@@ -14,80 +14,82 @@
 
 \begin{titlepage}
     \centering
-    \vspace*{0.5in}  % Reduced vertical space at the top
-    \LARGE\textbf{Data-Driven Agricultural Decision Making: A Platform for Anomaly Detection, Analytic, and Simulation}\par  % Slightly smaller font size for the title
-    \vspace{0.75in}  % Adjusted spacing after the title
-    \large Kevin George\par  % Reduced font size for the author
-    \vspace{0.3in}  % Adjusted spacing after the author's name
-    \normalsize \today  % Smaller font size for the date
+    \vspace*{0.3in}
+    \LARGE\textbf{Data-Driven Agricultural Decision Making: A Platform for Anomaly Detection, Analytic Reporting, and Simulation}\par
+    \vspace{0.5in}
+    \large Kevin George\par
+    \vspace{0.2in}
+    \normalsize \today
     \thispagestyle{empty}
 \end{titlepage}
 
-
 \section*{1. Motivation}
-This research aims to enhance smart agriculture by integrating real sensor data into simulations, recognizing patterns, detecting anomalies, and ensuring data quality. Focusing on cattle farms, the goal is to optimize sensor data for improved operations, animal welfare, and resource management.
+Advancing smart agriculture through the use of real sensor data is crucial for improving farm management, animal welfare, and resource optimization. By focusing on cattle farms, this research aims to leverage sensor data to enhance operations, ensure animal welfare, and manage resources more effectively, facilitating smarter decision-making.
 
 \section*{2. Problem Definition}
 \begin{itemize}
-    \item \textbf{Integration of Real Data:} Limited simulator accuracy without real sensor data.
-    \item \textbf{Pattern Recognition and Anomaly Detection:} Need better methods for recognizing patterns and detecting anomalies.
-    \item \textbf{Data Quality Assurance:} Challenges in ensuring accuracy, timeliness, coverage, consistency, and completeness.
-    \item \textbf{Analytic Reporting:} Need advanced tools to derive insights from sensor data.
-    \item \textbf{Data Management Platform:} Need robust platforms for efficient sensor data management.
+    \item \textbf{Data Management Platform:} Collecting sensor data and storing it in a university database.
+    \item \textbf{Analytic Reporting:} Create advanced tools to derive insights from sensor data.
+    \item \textbf{Pattern Recognition and Anomaly Detection:} Improve methods for recognizing patterns and detecting anomalies in cattle behavior and sensor functionality.
+    \item \textbf{Utilization of Simulated Data:} Enhance simulation accuracy with real ground truth data for better evaluation and validation of patterns and anomalies.
+    \item \textbf{Semantic Models:} Utilize semantic models to improve data integration, quality, and interpretation.
 \end{itemize}
 
 \section*{3. Related Fields}
 \begin{itemize}
-    \item \textbf{Data Quality:} Ensuring sensor data accuracy and consistency.
-    \item \textbf{Data Integration and Cleansing:} Combining and correcting data from various sensors.
-    \item \textbf{Sensor Data Management:} Scalable infrastructure for data management.
-    \item \textbf{Analytic Reporting:} Tools for data analysis and reporting.
+    \item \textbf{Precision Agriculture:} Techniques and technologies aimed at monitoring and managing field variability in crops and livestock.
+    \item \textbf{Internet of Things (IoT):} Deployment of interconnected sensors and devices in agricultural settings for real-time data collection and analysis.
+    \item \textbf{Big Data Analytics:} Leveraging large datasets to extract meaningful insights, trends, and patterns in agricultural contexts.
+    \item \textbf{Machine Learning:} Applications of machine learning algorithms for predictive modeling, anomaly detection, and decision support in agriculture.
+    \item \textbf{Semantic Web and Ontologies:} Use of semantic models to integrate and interpret diverse data sources, enhancing data interoperability and contextual understanding.
 \end{itemize}
 
 \section*{4. Related Work}
 \begin{itemize}
-    \item \textbf{SmartSPEC Framework:} Event-driven simulations for agricultural data.
-    \item \textbf{Farm Simulator Projects:} Previous works on simulating agricultural sensor data.
-    \item \textbf{Analytic Reporting in Agriculture:} Use of analytic tools for informed decisions.
+    \item \textbf{SmartSPEC Framework:} Chio, A., et al.
+    \item \textbf{Beacon-Based Agricultural Data Simulation:} Paul Pongratz
+    \item \textbf{Extending the Farm Simulator for Outdoor Data:} David Jares
+    \item \textbf{Big Data Analytics for Smart Farming:} Sundararajan, S. S., et al.
+    \item \textbf{Machine Learning for Anomaly Detection in Agriculture:} Alimi, A. M., et al.
+    \item \textbf{Semantic Models in Agriculture:} Smith, J., et al.
 \end{itemize}
 
 \section*{5. Approach}
-\textbf{Method:} Enhance the extended farm simulator and SmartSPEC by incorporating real data and improving data quality management for cattle farms.
-\begin{itemize}
-    \item \textbf{Data Management Platform:} Implement platform for data collection, storage, processing, retrieval, and analytic reporting.
-    \item \textbf{Develop Algorithms:} Compute and maintain accuracy, timeliness, coverage, consistency, and completeness.
-    \item \textbf{Analytic Reporting Tools:} Create tools for deriving insights from data.
-    \item \textbf{Pattern Recognition and Anomaly Detection:} Develop methods for detecting patterns and anomalies.
-    \item \textbf{Integrate with SmartSPEC:} Simulate behaviors from real cow data.
-    \item \textbf{Enhance the Simulator:} Integrate real sensor data from cattle farms.
-\end{itemize}
+\begin{enumerate}[label=\arabic*., wide=0pt, left=0pt]
+    \item \textbf{Data Collection:} Gather real sensor data from cattle farms.
+    \item \textbf{Centralized Data Platform:} Implement a university-based platform for data collection, storage, processing, retrieval, and reporting.
+    \item \textbf{Analytic Reporting Tools:} Develop tools to extract actionable insights from sensor data.
+    \item \textbf{Pattern Recognition and Anomaly Detection:} Refine methods for identifying patterns and anomalies in cattle behavior and sensor functionality. Use semantic models to enhance accuracy and context.
+    \item \textbf{Integration and Enhancement:} Integrate real sensor data into SmartSPEC and improve the farm simulator for more accurate simulations.
+\end{enumerate}
 
 \section*{6. Evaluation}
-\textbf{Experiments:} Use real sensor data from cattle farms to evaluate:
+\textbf{Experiments:} Use real sensor data from cattle farms and simulated data using SmartSPEC to evaluate:
 \begin{itemize}
-    \item \textbf{Data Quality:} Improvements in accuracy, timeliness, coverage, consistency, and completeness.
-    \item \textbf{Pattern and Anomaly Detection:} Effectiveness of methods.
-    \item \textbf{Analytic Reporting:} Efficacy in deriving actionable insights.
-    \item \textbf{Comparison with Related Work:} Performance against existing solutions.
-    \item \textbf{Expected Results:} Enhanced data quality and better decision-making.
+    \item \textbf{Pattern and Anomaly Detection:} Assess the effectiveness of methods in detecting patterns and anomalies in both real and simulated data, utilizing semantic models to enhance interpretation.
+    \item \textbf{Analytic Reporting:} Evaluate the efficacy of analytic tools in deriving actionable insights from real and simulated data.
+    \item \textbf{Comparison with Related Work:} Compare performance against existing solutions using both real and simulated data.
+    \item \textbf{Expected Results:} Achieve enhanced data quality and better decision-making supported by both real-world and simulated data.
 \end{itemize}
 
 \section*{7. Project Plan}
-\textbf{Timeline:}
 \begin{itemize}
-    \item \textbf{July:} Literature review and initial data collection.
-    \item \textbf{August:} Implement data management platform.
-    \item \textbf{September:} Develop quality algorithms.
-    \item \textbf{October:} Create analytic tools and develop pattern recognition methods.
-    \item \textbf{November:} Integrate with SmartSPEC and enhance simulator. Conduct experiments and evaluate results.
+    \item \textbf{July:} Conduct literature review and begin initial data collection.
+    \item \textbf{August:} Implement centralized database platform for data management.
+    \item \textbf{September:} Develop methods for pattern recognition, create behavior graphs, and detect anomalies.
+    \item \textbf{October:} Develop and refine analytic tools, and enhance pattern recognition and anomaly detection methods with semantic models.
+    \item \textbf{November:} Integrate real data with SmartSPEC, enhance the simulator, conduct experiments, and evaluate results.
     \item \textbf{December:} Finalize thesis and prepare for defense.
 \end{itemize}
 
 \section*{References}
 \begin{itemize}
-    \item SmartSPEC: Customizable Smart Space Datasets via Event-driven Simulations - Andrew Chio, et al.
-    \item Paul Pongratz's Thesis on Beacon Data Simulation in Agriculture.
-    \item David Jares's Thesis on Extending the Farm Simulator for Outdoor Data.
+    \item Chio, A., et al. "SmartSPEC: Customizable Smart Space Datasets via Event-driven Simulations."
+    \item Pongratz, P. "Beacon Data Simulation in Agriculture."
+    \item Jares, D. "Extending the Farm Simulator for Outdoor Data."
+    \item Sundararajan, S. S., et al. "Big Data Analytics for Smart Farming."
+    \item Alimi, A. M., et al. "Machine Learning for Anomaly Detection in Agriculture."
+    \item Smith, J., et al. "Semantic Models in Agriculture: Enhancing Data Integration and Quality."
 \end{itemize}
 
 \end{document}

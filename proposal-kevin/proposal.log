@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2023.8.26)  25 JUN 2024 13:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2023.8.26)  16 JUL 2024 13:44
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -8,8 +8,8 @@ entering extended mode
 LaTeX2e <2022-11-01> patch level 1
 L3 programming layer <2023-03-30> (C:\Users\hikev\AppData\Local\Programs\MiKTeXNew\tex/latex/base\article.cls
 Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
-(C:\Users\hikev\AppData\Local\Programs\MiKTeXNew\tex/latex/base\size12.clo
-File: size12.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
+(C:\Users\hikev\AppData\Local\Programs\MiKTeXNew\tex/latex/base\size11.clo
+File: size11.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
 )
 \c@part=\count185
 \c@section=\count186
@@ -296,23 +296,23 @@ Package hyperref Info: Link coloring OFF on input line 13.
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(72.26999pt, 452.9679pt, 72.26999pt)
-* v-part:(T,H,B)=(72.26999pt, 700.50687pt, 72.26999pt)
+* h-part:(L,W,R)=(54.2025pt, 489.10287pt, 54.2025pt)
+* v-part:(T,H,B)=(54.2025pt, 736.64185pt, 54.2025pt)
 * \paperwidth=597.50787pt
 * \paperheight=845.04684pt
-* \textwidth=452.9679pt
-* \textheight=700.50687pt
-* \oddsidemargin=0.0pt
-* \evensidemargin=0.0pt
-* \topmargin=-37.0pt
+* \textwidth=489.10287pt
+* \textheight=736.64185pt
+* \oddsidemargin=-18.06749pt
+* \evensidemargin=-18.06749pt
+* \topmargin=-55.06749pt
 * \headheight=12.0pt
 * \headsep=25.0pt
-* \topskip=12.0pt
+* \topskip=11.0pt
 * \footskip=30.0pt
-* \marginparwidth=44.0pt
+* \marginparwidth=59.0pt
 * \marginparsep=10.0pt
 * \columnsep=10.0pt
-* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
@@ -325,26 +325,31 @@ Package hyperref Info: Link coloring OFF on input line 13.
 [1
 
 {C:/Users/hikev/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
+Overfull \hbox (7.50995pt too wide) in paragraph at lines 43--44
+[]\OT1/cmr/bx/n/10.95 Machine Learn-ing: \OT1/cmr/m/n/10.95 Ap-pli-ca-tions of ma-chine learn-ing al-go-rithms for pre-dic-tive mod-el-ing, anomaly
+ []
+
+
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.59     \item \textbf
-                      {Analytic Reporting Tools:} Create tools for deriving ... [1] [2] (proposal.aux)
+l.62     \item \textbf
+                      {Pattern Recognition and Anomaly Detection:} Refine me... [1] [2] [3] (proposal.aux)
 Package rerunfilecheck Info: File `proposal.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 9624 strings out of 476330
- 154449 string characters out of 5786359
- 1858660 words of memory out of 5000000
- 29956 multiletter control sequences out of 15000+600000
- 514739 words of font info for 40 fonts, out of 8000000 for 9000
+ 9638 strings out of 476330
+ 154642 string characters out of 5786359
+ 1860660 words of memory out of 5000000
+ 29963 multiletter control sequences out of 15000+600000
+ 514745 words of font info for 40 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,5n,76p,388b,545s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\hikev\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmr12.pfb>
-Output written on proposal.pdf (3 pages, 44862 bytes).
+ 75i,5n,76p,436b,585s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ <C:\Users\hikev\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1095.pk><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmr12.pfb>
+Output written on proposal.pdf (4 pages, 78490 bytes).
 PDF statistics:
- 43 PDF objects out of 1000 (max. 8388607)
- 11 named destinations out of 1000 (max. 500000)
+ 63 PDF objects out of 1000 (max. 8388607)
+ 17 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
