@@ -29,11 +29,11 @@ Advancing smart agriculture through the use of real sensor data is crucial for i
 
 \section*{2. Problem Statement}
 
-Modern cattle farming struggles with resource management and animal welfare due to limitations in existing data management solutions, which are often costly, incompatible with specific devices, and lack detailed analytics. While platforms like \textbf{Digitanimal}, \textbf{Performance Livestock Analytics (PLA)}, \textbf{Livestocked}, \textbf{NAVFARM}, \textbf{Farm Manager and Analyzer}, \textbf{AGEX Herd}, \textbf{Ranch Manager}, and \textbf{ThingsBoard} offer useful features, they typically lack the customization needed for WeideInsight's data infrastructure, which uses technologies like Bluetooth Low Energy (BLE) and mioty.
+Modern cattle farming faces significant challenges in resource management, animal welfare, and operational efficiency. Existing data management solutions often lack the advanced analytics and monitoring capabilities needed to support effective decision-making. These limitations include high costs, compatibility issues with farm-specific devices, and insufficient integration with advanced data collection technologies.
 
-Our platform aims to provide a specialized solution, leveraging WeideInsight's capabilities for precise data collection, advanced monitoring, and comprehensive analytics to enhance decision-making in cattle farming.
+Our proposed platform seeks to address these issues by integrating with the WeideInsight system, utilizing technologies such as Bluetooth Low Energy (BLE) and mioty for precise data collection. This platform is designed to provide comprehensive, data-driven decision-making tools tailored specifically for cattle farming. It distinguishes itself from existing platforms like \textbf{Digitanimal}, \textbf{Performance Livestock Analytics (PLA)}, \textbf{Livestocked}, \textbf{NAVFARM}, \textbf{Farm Manager and Analyzer}, \textbf{AGEX Herd}, \textbf{Ranch Manager}, and \textbf{ThingsBoard} by offering specialized, cost-effective features that meet the unique requirements of this sector.
 
-\textbf{Research Question:} How can a specialized data management platform be designed to meet the unique requirements of cattle farming, particularly for advanced monitoring and data analytics?
+\textbf{Research Question:} How can a data-driven platform be developed to enhance decision-making in cattle farm management through advanced monitoring, analytics, and simulation capabilities?
 
 \section*{3. Related Fields}
 \begin{itemize}
@@ -51,7 +51,7 @@ The proposed system architecture comprises several interlinked components, each 
 
     \item \textbf{Data Ingestion Component:} The collected data from Weidelnsight via API and then ingested by the Data Ingestion Component. This Component aggregates data from various sources, ensuring it is ready for processing and analysis.
 
-    \item \textbf{Centralized Data Platform:}
+    \item \textbf{Centralized Data Platform in University:}
     \begin{itemize}
         \item \textbf{Postgres Database Component:} Data is stored in the Postgres Database Component, which acts as a central repository. It supports efficient data querying and transactions, forming the backbone for data management.
         \item \textbf{Common Resource (Data Management) Component:} This Component oversees the central storage and management of both raw and processed data, ensuring schema consistency and data integrity.
