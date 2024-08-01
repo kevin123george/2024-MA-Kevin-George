@@ -49,7 +49,7 @@ The proposed system architecture comprises several interlinked components, each 
 
 \begin{enumerate}[label=\arabic*., wide=0pt, left=0pt]
 
-    \item \textbf{Data Ingestion Component:} The collected data from Weidelnsight via API and then ingested by the Data Ingestion Component. This Component aggregates data from various sources, ensuring it is ready for processing and analysis.
+    \item \textbf{Data Ingestion Component:} The collected data from Weidelnsight via API and then ingested by the Data Ingestion Component periodically. This Component aggregates data from various sources and store to DB component, ensuring it is ready for processing and analysis.
 
     \item \textbf{Centralized Data Platform in University:}
     \begin{itemize}
@@ -60,14 +60,14 @@ The proposed system architecture comprises several interlinked components, each 
     \item \textbf{Analytic Reporting and Processing:}
     \begin{itemize}
         \item \textbf{Analytic Engine Component:} The Analytic Engine Component processes the stored data, running machine learning models and statistical analyses. It generates actionable insights, predictions, and recommendations based on the analysis.
-        \item \textbf{Watcher/Pattern Recognition Component:} This component continuously monitors data streams to identify anomalies and patterns. It plays a crucial role in predictive analytics and anomaly detection.
+        \item \textbf{Watcher/Pattern Recognition Component:} This component monitors data to identify anomalies and patterns. It plays a crucial role in predictive analytics and anomaly detection.
         \item \textbf{Alert Engine Component:} Based on predefined rules and detected anomalies, this Component generates alerts and notifications. It manages the distribution of these alerts through appropriate channels.
     \end{itemize}
 
     \item \textbf{User Interaction and Integration:}
     \begin{itemize}
-        \item \textbf{User Interface Component:} This component provides web and mobile interfaces, allowing users to interact with the system. It handles user authentication, authorization, and presents data visualizations and dashboards.
-        \item \textbf{Gateway Service:} Acting as an API gateway, the Gateway Service routes client requests to the appropriate microservices, managing API rate limiting, security, and load balancing.
+        \item \textbf{User Interface Component:} This component provides web and mobile interfaces, allowing users to interact with the system. Presents data visualizations, dashboards AND querying database.
+        \item \textbf{Gateway Service:} Acting as an API gateway, the Gateway Service routes client requests to the appropriate microservices.
         \item \textbf{Service Registry and Discovery Service:} This service maintains a registry of all available system services, enabling them to register and discover each other.
         \item \textbf{SmartSPEC Simulation Component:} For scenario analysis, the SmartSPEC Simulation Component integrates real-time and historical data. It provides simulation capabilities to validate model accuracy and assess system robustness under different conditions.
     \end{itemize}
@@ -80,7 +80,7 @@ The proposed system architecture comprises several interlinked components, each 
 \end{figure}
 
 \section*{5. Evaluation}
-\textbf{Experiments:} Use real sensor data from cattle farms and simulated data generated using SmartSPEC to evaluate:
+\textbf{Experiments:} Use real sensor data from cattle farms and simulated data generated using SmartSPEC component to evaluate with simulated data:
 \begin{itemize}
     \item \textbf{Pattern and Anomaly Detection:} Assess the effectiveness of methods in detecting patterns and anomalies in both real and simulated data, utilizing semantic models to enhance interpretation.
     \item \textbf{Analytic Reporting:} Evaluate the efficacy of analytic tools in deriving actionable insights from real and simulated data.
@@ -93,7 +93,7 @@ The proposed system architecture comprises several interlinked components, each 
 \section*{6. Expected Outcomes}
 The research is expected to deliver a comprehensive platform for real-time livestock monitoring, enhanced data analytics, and reliable anomaly detection. The platform will facilitate improved decision-making in cattle farming through precise data management and insightful reporting.
 
-\section*{7. Project Timeline}
+\section*{7. Thesis Timeline}
 \begin{itemize}
     \item \textbf{August:} Literature review and data collection. Begin drafting the introduction and literature review sections.
     \item \textbf{September:} Development and testing of pattern recognition and anomaly detection methods. Document methodology and initial findings.
