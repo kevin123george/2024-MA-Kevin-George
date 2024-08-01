@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1721131179 "c:/Users/hikev/Desktop/2024-MA-Kevin-George/proposal-kevin/proposal.tex" "proposal.pdf" "proposal" 1721131181 0
-  "C:/Users/hikev/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1718794833 183313 016fe215503b8d05879efa7278a06516 ""
+["pdflatex"] 1722511584 "c:/Users/hikev/Desktop/2024-MA-Kevin-George/proposal-kevin/proposal.tex" "proposal.pdf" "proposal" 1722511586 0
+  "C:/Users/hikev/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1722323195 183313 016fe215503b8d05879efa7278a06516 ""
   "C:/Users/hikev/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1095.pk" 1721128155 12668 d0a7d2b19c18a39460edffd920315a6a ""
   "C:/Users/hikev/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1693039713 23180290 f05261733b019e7e4ae8e1ade64979a6 ""
   "C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/tfm/jknappen/ec/tcrm1095.tfm" 993062508 1460 8005ce585ff351dff78998923504da5e ""
@@ -9,10 +9,12 @@
   "C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/tfm/public/cm/cmr10.tfm" 1136768653 1296 45809c5a464d5f32c8f98ba97c1bb47f ""
   "C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/tfm/public/cm/cmr12.tfm" 1136768653 1288 655e228510b4c2a1abe905c368440826 ""
   "C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/tfm/public/cm/cmr17.tfm" 1136768653 1292 296a67155bdbfc32aa9c636f21e91433 ""
+  "C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/tfm/public/cm/cmti10.tfm" 1136768653 1480 aa8e34af0eb6a2941b776984cf1dfdc4 ""
   "C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmbx10.pfb" 1247596666 34811 78b52f49e893bcba91bd7581cdc144c0 ""
   "C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmbx12.pfb" 1247596666 32080 340ef9bf63678554ee606688e7b5339d ""
   "C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1247596667 35752 024fb6c41858982481f6968b5fc26508 ""
   "C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1247596667 32722 d7379af29a190c3f453aba36302ff5a9 ""
+  "C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmti10.pfb" 1247596667 37944 359e864bd06cde3b1cf57bb20757fb06 ""
   "C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/tex/context/base/mkii/supp-pdf.mkii" 1580393758 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/tex/generic/atbegshi/atbegshi.sty" 1575574700 24708 5584a51a7101caf7e6bbf1fc27d8f7b1 ""
   "C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/tex/generic/bigintcalc/bigintcalc.sty" 1576437202 40635 c40361e206be584d448876bba8a64a3b ""
@@ -63,10 +65,11 @@
   "C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/tex/latex/refcount/refcount.sty" 1576437552 9878 9e94e8fa600d95f9c7731bb21dfb67a4 ""
   "C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/tex/latex/rerunfilecheck/rerunfilecheck.sty" 1657800696 9714 ba3194bd52c8499b3f1e3eb91d409670 ""
   "C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/tex/latex/url/url.sty" 1388494052 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
-  "c:/Users/hikev/Desktop/2024-MA-Kevin-George/proposal-kevin/proposal.tex" 1721131178 6089 9f015d6de4d16ab4240955362e5e890f ""
-  "proposal.aux" 1721131181 554 3a9fad3b6f2576a50b1e2f7054735a66 "pdflatex"
-  "proposal.out" 1721131181 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "proposal.tex" 1721131178 6089 9f015d6de4d16ab4240955362e5e890f ""
+  "archite.png" 1722510104 631337 9d7db72a7d0d6c0d3704d250593d1c52 ""
+  "c:/Users/hikev/Desktop/2024-MA-Kevin-George/proposal-kevin/proposal.tex" 1722511584 11603 e6aabe53d9ff51a194703e073e68a54c ""
+  "proposal.aux" 1722511585 996 7caa4dae379f9375124c626b5f61f2fe "pdflatex"
+  "proposal.out" 1722511585 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "proposal.tex" 1722511584 11603 e6aabe53d9ff51a194703e073e68a54c ""
   (generated)
   "proposal.aux"
   "proposal.log"

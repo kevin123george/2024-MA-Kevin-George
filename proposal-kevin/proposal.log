@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2023.8.26)  16 JUL 2024 13:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2023.8.26)  1 AUG 2024 13:26
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -325,31 +325,32 @@ Package hyperref Info: Link coloring OFF on input line 13.
 [1
 
 {C:/Users/hikev/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
-Overfull \hbox (7.50995pt too wide) in paragraph at lines 43--44
-[]\OT1/cmr/bx/n/10.95 Machine Learn-ing: \OT1/cmr/m/n/10.95 Ap-pli-ca-tions of ma-chine learn-ing al-go-rithms for pre-dic-tive mod-el-ing, anomaly
- []
-
-
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.62     \item \textbf
-                      {Pattern Recognition and Anomaly Detection:} Refine me... [1] [2] [3] (proposal.aux)
+l.57         \item \textbf
+                          {Common Resource (Data Management) Component:} Thi... [1]
+<archite.png, id=22, 2018.54124pt x 830.10126pt>
+File: archite.png Graphic file (type png)
+<use archite.png>
+Package pdftex.def Info: archite.png  used on input line 77.
+(pdftex.def)             Requested size: 489.10287pt x 201.12831pt.
+ [2 <./archite.png>] [3] [4] (proposal.aux)
 Package rerunfilecheck Info: File `proposal.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 9638 strings out of 476330
- 154642 string characters out of 5786359
+ 9671 strings out of 476330
+ 154993 string characters out of 5786359
  1860660 words of memory out of 5000000
- 29963 multiletter control sequences out of 15000+600000
- 514745 words of font info for 40 fonts, out of 8000000 for 9000
+ 29978 multiletter control sequences out of 15000+600000
+ 515091 words of font info for 41 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,5n,76p,436b,585s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\hikev\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1095.pk><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmr12.pfb>
-Output written on proposal.pdf (4 pages, 78473 bytes).
+ 75i,6n,76p,735b,684s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ <C:\Users\hikev\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1095.pk><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on proposal.pdf (5 pages, 479631 bytes).
 PDF statistics:
- 63 PDF objects out of 1000 (max. 8388607)
- 17 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 92 PDF objects out of 1000 (max. 8388607)
+ 32 named destinations out of 1000 (max. 500000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
