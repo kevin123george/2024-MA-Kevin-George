@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2023.8.26)  1 AUG 2024 14:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2023.8.26)  1 AUG 2024 14:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -348,7 +348,7 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  75i,6n,76p,790b,672s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\hikev\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1095.pk><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on proposal.pdf (5 pages, 479872 bytes).
+Output written on proposal.pdf (5 pages, 479641 bytes).
 PDF statistics:
  92 PDF objects out of 1000 (max. 8388607)
  32 named destinations out of 1000 (max. 500000)

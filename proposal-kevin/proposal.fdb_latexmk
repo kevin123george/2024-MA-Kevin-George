@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1722513701 "c:/Users/hikev/Desktop/2024-MA-Kevin-George/proposal-kevin/proposal.tex" "proposal.pdf" "proposal" 1722513702 0
+["pdflatex"] 1722513819 "c:/Users/hikev/Desktop/2024-MA-Kevin-George/proposal-kevin/proposal.tex" "proposal.pdf" "proposal" 1722513820 0
   "C:/Users/hikev/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1722323195 183313 016fe215503b8d05879efa7278a06516 ""
   "C:/Users/hikev/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1095.pk" 1721128155 12668 d0a7d2b19c18a39460edffd920315a6a ""
   "C:/Users/hikev/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1693039713 23180290 f05261733b019e7e4ae8e1ade64979a6 ""
@@ -66,10 +66,10 @@
   "C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/tex/latex/rerunfilecheck/rerunfilecheck.sty" 1657800696 9714 ba3194bd52c8499b3f1e3eb91d409670 ""
   "C:/Users/hikev/AppData/Local/Programs/MiKTeXNew/tex/latex/url/url.sty" 1388494052 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "archite.png" 1722511781 631337 9d7db72a7d0d6c0d3704d250593d1c52 ""
-  "c:/Users/hikev/Desktop/2024-MA-Kevin-George/proposal-kevin/proposal.tex" 1722513700 11833 083218c00b6149f37d6a2957fcde004b ""
-  "proposal.aux" 1722513702 996 7caa4dae379f9375124c626b5f61f2fe "pdflatex"
-  "proposal.out" 1722513702 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "proposal.tex" 1722513700 11833 083218c00b6149f37d6a2957fcde004b ""
+  "c:/Users/hikev/Desktop/2024-MA-Kevin-George/proposal-kevin/proposal.tex" 1722513818 11832 5a580a2160ef76afe0af8bf3e64f09f6 ""
+  "proposal.aux" 1722513820 996 7caa4dae379f9375124c626b5f61f2fe "pdflatex"
+  "proposal.out" 1722513820 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "proposal.tex" 1722513818 11832 5a580a2160ef76afe0af8bf3e64f09f6 ""
   (generated)
   "proposal.aux"
   "proposal.log"
