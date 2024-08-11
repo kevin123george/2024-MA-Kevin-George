@@ -24,7 +24,7 @@ public class SummaryService {
 
 
     public void fetchSummary() {
-        String authorization = "Basic ==";
+        String authorization = "Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx==";
         SummaryRequest request = buildSummaryRequest();
 
         List<SummaryResponse> routes = safectoryClient.getSummary(authorization, request);

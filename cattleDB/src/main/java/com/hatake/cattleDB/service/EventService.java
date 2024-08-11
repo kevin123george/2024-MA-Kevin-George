@@ -25,7 +25,7 @@ public class EventService {
 
 
     public List<EventResponse> fetchEvents() {
-        String authorization = "Basic ==";
+        String authorization = "Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx==";
         EventRequest request = new EventRequest();
         request.setDeviceId(Collections.singletonList(0));
         request.setTrackableId(Collections.emptyList());

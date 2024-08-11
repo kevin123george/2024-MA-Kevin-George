@@ -2,17 +2,13 @@ package com.hatake.cattleDB.models;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.OffsetDateTime;
 import java.util.Map;
 
 @Entity
-@Getter
-@Setter
+@Data
 @ToString
 @RequiredArgsConstructor
 public class RouteEntity {

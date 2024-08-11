@@ -11,8 +11,8 @@ public class AuthService {
     private final OkHttpClient client = new OkHttpClient();
 
     public void authenticate(HttpSession session) throws IOException {
-        String email = "kevin.george@stud.uni-bamberg.de"; // Replace with actual username
-        String password = "Blackbird123!"; // Replace with actual password
+        String email = "***************************e"; // Replace with actual username
+        String password = "***************************!"; // Replace with actual password
 
         RequestBody body = new FormBody.Builder()
                 .add("email", email)
