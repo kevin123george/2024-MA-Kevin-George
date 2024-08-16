@@ -21,26 +21,23 @@ public class SummaryService {
     @Autowired
     private SummaryRepository summaryRepository;
 
-
+    private static final int BATCH_SIZE = 500; // You can adjust the batch size as needed
 
     public void fetchSummary() {
-        String authorization = "Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx==";
+        String authorization = "Basic a2V2aW4uZ2VvcmdlQHN0dWQudW5pLWJhbWJlcmcuZGU6QmxhY2tiaXJkMTIzIQ==";
         SummaryRequest request = buildSummaryRequest();
 
         List<SummaryResponse> routes = safectoryClient.getSummary(authorization, request);
         var entities = mapToEntityList(routes);
 
-        summaryRepository.saveAll(entities);
-
-
+        saveEntitiesInBatch(entities, BATCH_SIZE);
 
         System.out.println(routes);
     }
 
-    public List<SummaryEntity> getAllSummaryEntities(){
+    public List<SummaryEntity> getAllSummaryEntities() {
         return summaryRepository.findAll();
     }
-
 
     public static List<SummaryEntity> mapToEntityList(List<SummaryResponse> responses) {
         return responses.stream()
@@ -83,4 +80,12 @@ public class SummaryService {
         return request;
     }
 
+    private void saveEntitiesInBatch(List<SummaryEntity> entities, int batchSize) {
+        int size = entities.size();
+        for (int i = 0; i < size; i += batchSize) {
+            int end = Math.min(size, i + batchSize);
+            List<SummaryEntity> batch = entities.subList(i, end);
+            summaryRepository.saveAll(batch);
+        }
+    }
 }

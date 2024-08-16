@@ -33,16 +33,16 @@ public class DataSync {
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
 
-    @Scheduled(cron = "0 */10 * * * *")
-    public void syncEvents() {
-        logJobExecution("syncEvents", () -> {
-            logger.info("Starting event synchronization...");
-            eventService.fetchEvents();
-            logger.info("Event synchronization completed.");
-        });
-    }
+//    @Scheduled(cron = "0 */10 * * * *")
+//    public void syncEvents() {
+//        logJobExecution("syncEvents", () -> {
+//            logger.info("Starting event synchronization...");
+//            eventService.fetchEvents();
+//            logger.info("Event synchronization completed.");
+//        });
+//    }
 
-    @Scheduled(cron = "0 10/20 * * * *")
+    @Scheduled(cron = "0 0 */3 * * *")
     public void syncRoutes() {
         logJobExecution("syncRoutes", () -> {
             logger.info("Starting route synchronization...");
@@ -51,14 +51,15 @@ public class DataSync {
         });
     }
 
-    @Scheduled(cron = "0 20/30 * * * *")
-    public void syncSummary() {
-        logJobExecution("syncSummary", () -> {
-            logger.info("Starting summary synchronization...");
-            summaryService.fetchSummary();
-            logger.info("Summary synchronization completed.");
-        });
-    }
+
+//    @Scheduled(cron = "0 */10 * * * *")
+//    public void syncSummary() {
+//        logJobExecution("syncSummary", () -> {
+//            logger.info("Starting summary synchronization...");
+//            summaryService.fetchSummary();
+//            logger.info("Summary synchronization completed.");
+//        });
+//    }
 
     private void logJobExecution(String jobName, Runnable job) {
         Instant startTime = Instant.now();

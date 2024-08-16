@@ -5,14 +5,12 @@ import com.hatake.cattleDB.dtos.RouteResponse;
 import com.hatake.cattleDB.models.RouteEntity;
 import com.hatake.cattleDB.repository.RouteRepository;
 import com.hatake.cattleDB.fegin.SafectoryClient;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jakarta.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,12 +25,9 @@ public class RouteService {
     @Autowired
     private RouteRepository routeRepository;
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     @Transactional
     public void fetchRoutes() {
-        String authorization = "Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx==";
+        String authorization = "Basic a2V2aW4uZ2VvcmdlQHN0dWQudW5pLWJhbWJlcmcuZGU6QmxhY2tiaXJkMTIzIQ==";
         RouteRequest request = buildRouteRequest();
 
         logger.info("Fetching routes from external service...");
@@ -62,28 +57,21 @@ public class RouteService {
     }
 
     private void saveEntitiesInBatch(List<RouteEntity> entities) {
-        int batchSize = 50;  // Set the batch size
+        int batchSize = 500;  // Set the batch size
         int totalEntities = entities.size();
 
-        for (int i = 0; i < totalEntities; i++) {
-            entityManager.persist(entities.get(i));
+        for (int i = 0; i < totalEntities; i += batchSize) {
+            int endIndex = Math.min(i + batchSize, totalEntities);
+            List<RouteEntity> batchList = entities.subList(i, endIndex);
 
-            // Flush and clear the persistence context every batch
-            if (i % batchSize == 0 && i > 0) {
-                entityManager.flush();
-                entityManager.clear();
-                logger.info("Processed {} entities out of {}", i, totalEntities);
-            }
+            // Use the repository's saveAll method to save the batch
+            routeRepository.saveAll(batchList);
+            logger.info("Processed {} entities out of {}", endIndex, totalEntities);
         }
-
-        // Flush the remaining entities
-        entityManager.flush();
-        entityManager.clear();
-        logger.info("All entities have been processed and saved.");
     }
 
     public static List<RouteEntity> mapToEntityList(List<RouteResponse> dtos) {
-        List<RouteEntity> routeEntities = new java.util.ArrayList<>(List.of());
+        List<RouteEntity> routeEntities = new java.util.ArrayList<>();
         dtos.forEach(dto -> {
             RouteEntity entity = new RouteEntity();
             entity.setId(dto.getId());
