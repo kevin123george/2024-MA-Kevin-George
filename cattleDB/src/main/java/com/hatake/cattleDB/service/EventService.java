@@ -24,7 +24,7 @@ public class EventService {
     private static final int BATCH_SIZE = 500; // Define the batch size
 
     public List<EventResponse> fetchEvents() {
-        String authorization = "Basic a2V2aW4uZ2VvcmdlQHN0dWQudW5pLWJhbWJlcmcuZGU6QmxhY2tiaXJkMTIzIQ==";
+        String authorization = "Basic hahahahahahahahahahaha";
         EventRequest request = new EventRequest();
         request.setDeviceId(Collections.singletonList(0));
         request.setTrackableId(Collections.emptyList());

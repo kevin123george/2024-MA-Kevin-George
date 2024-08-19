@@ -2,6 +2,7 @@ package com.hatake.cattleDB.cronjobs;
 
 import com.hatake.cattleDB.models.CronJobLog;
 import com.hatake.cattleDB.repository.CronJobLogRepository;
+import com.hatake.cattleDB.service.BeaconService;
 import com.hatake.cattleDB.service.EventService;
 import com.hatake.cattleDB.service.RouteService;
 import com.hatake.cattleDB.service.SummaryService;
@@ -29,18 +30,20 @@ public class DataSync {
     private EventService eventService;
 
     @Autowired
+    private BeaconService beaconService;
+    @Autowired
     private CronJobLogRepository cronJobLogRepository;
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
 
-//    @Scheduled(cron = "0 */10 * * * *")
-//    public void syncEvents() {
-//        logJobExecution("syncEvents", () -> {
-//            logger.info("Starting event synchronization...");
-//            eventService.fetchEvents();
-//            logger.info("Event synchronization completed.");
-//        });
-//    }
+    @Scheduled(cron = "0 */10 * * * *")
+    public void syncEvents() {
+        logJobExecution("syncEvents", () -> {
+            logger.info("Starting event synchronization...");
+            eventService.fetchEvents();
+            logger.info("Event synchronization completed.");
+        });
+    }
 
     @Scheduled(cron = "0 0 */3 * * *")
     public void syncRoutes() {
@@ -52,14 +55,24 @@ public class DataSync {
     }
 
 
-//    @Scheduled(cron = "0 */10 * * * *")
-//    public void syncSummary() {
-//        logJobExecution("syncSummary", () -> {
-//            logger.info("Starting summary synchronization...");
-//            summaryService.fetchSummary();
-//            logger.info("Summary synchronization completed.");
-//        });
-//    }
+    @Scheduled(cron = "0 */10 * * * *")
+    public void syncSummary() {
+        logJobExecution("syncSummary", () -> {
+            logger.info("Starting summary synchronization...");
+            summaryService.fetchSummary();
+            logger.info("Summary synchronization completed.");
+        });
+    }
+
+
+    @Scheduled(cron = "0 */1 * * * *")
+    public void syncBecons() {
+        logJobExecution("syncSummary", () -> {
+            logger.info("Starting summary synchronization...");
+            beaconService.fetchAndSaveBeacons();
+            logger.info("Summary synchronization completed.");
+        });
+    }
 
     private void logJobExecution(String jobName, Runnable job) {
         Instant startTime = Instant.now();

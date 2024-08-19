@@ -27,7 +27,7 @@ public class RouteService {
 
     @Transactional
     public void fetchRoutes() {
-        String authorization = "Basic a2V2aW4uZ2VvcmdlQHN0dWQudW5pLWJhbWJlcmcuZGU6QmxhY2tiaXJkMTIzIQ==";
+        String authorization = "Basic hahahahahahahahahahaha";
         RouteRequest request = buildRouteRequest();
 
         logger.info("Fetching routes from external service...");
@@ -76,7 +76,7 @@ public class RouteService {
             RouteEntity entity = new RouteEntity();
             entity.setId(dto.getId());
             entity.setName(dto.getName());
-            entity.setAttributes(dto.getAttributes());
+//            entity.setAttributes(dto.getAttributes());
             entity.setProtocol(dto.getProtocol());
             entity.setServerTime(dto.getServerTime());
             entity.setDeviceTime(dto.getDeviceTime());

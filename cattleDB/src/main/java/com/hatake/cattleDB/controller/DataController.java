@@ -2,6 +2,7 @@ package com.hatake.cattleDB.controller;
 
 import com.hatake.cattleDB.dtos.EventResponse;
 import com.hatake.cattleDB.models.SummaryEntity;
+import com.hatake.cattleDB.service.DeviceService;
 import com.hatake.cattleDB.service.EventService;
 import com.hatake.cattleDB.service.RouteService;
 import com.hatake.cattleDB.service.SummaryService;
@@ -23,6 +24,12 @@ public class DataController {
 
     @Autowired
     private SummaryService summaryService;
+    private final DeviceService deviceService;
+
+
+    public DataController(DeviceService deviceService) {
+        this.deviceService = deviceService;
+    }
 
     // Endpoint for fetching events
     @GetMapping("/events/fetch")
@@ -48,5 +55,12 @@ public class DataController {
     @GetMapping("/reports/summary")
     public List<SummaryEntity> getAllSummary() {
         return summaryService.getAllSummaryEntities();
+    }
+
+
+    @GetMapping("/fetch-devices")
+    public String fetchAndStoreDevices() {
+        deviceService.fetchAndStoreDevices();
+        return "Devices fetched and stored successfully!";
     }
 }
