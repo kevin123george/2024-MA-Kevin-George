@@ -1,6 +1,5 @@
 package com.hatake.cattleDB.service;
 
-
 import com.hatake.cattleDB.dtos.EventRequest;
 import com.hatake.cattleDB.dtos.EventResponse;
 import com.hatake.cattleDB.fegin.SafectoryClient;
@@ -22,10 +21,10 @@ public class EventService {
     @Autowired
     private SafectoryClient safectoryClient;
 
-
+    private static final int BATCH_SIZE = 500; // Define the batch size
 
     public List<EventResponse> fetchEvents() {
-        String authorization = "Basic ==";
+        String authorization = "Basic hahahahahahahahahahaha";
         EventRequest request = new EventRequest();
         request.setDeviceId(Collections.singletonList(0));
         request.setTrackableId(Collections.emptyList());
@@ -39,26 +38,33 @@ public class EventService {
         request.setFilterDurationMin(300);
         request.setQueryId(null);
 
-        var eventResponses =safectoryClient.getEvents(authorization, request);
+        var eventResponses = safectoryClient.getEvents(authorization, request);
+
         // Convert EventResponse to EventEntity
         List<EventEntity> eventEntities = eventResponses.stream()
                 .map(this::convertToEntity)
                 .collect(Collectors.toList());
 
-        // Save all entities
-        eventRepository.saveAll(eventEntities);
+        // Save entities in batches
+        saveEntitiesInBatch(eventEntities, BATCH_SIZE);
 
         // Return the responses
         return eventResponses;
     }
 
-
+    private void saveEntitiesInBatch(List<EventEntity> entities, int batchSize) {
+        int size = entities.size();
+        for (int i = 0; i < size; i += batchSize) {
+            int end = Math.min(size, i + batchSize);
+            List<EventEntity> batch = entities.subList(i, end);
+            eventRepository.saveAll(batch);
+        }
+    }
 
     private EventEntity convertToEntity(EventResponse eventResponse) {
         EventEntity eventEntity = new EventEntity();
         eventEntity.setId(eventResponse.getId());
         eventEntity.setName(eventResponse.getName());
-//        eventEntity.setAttributes(eventResponse.getAttributes() != null ? eventResponse.getAttributes().toString() : null);
         eventEntity.setType(eventResponse.getType());
         eventEntity.setDeviceId(eventResponse.getDeviceId());
         eventEntity.setTrackableId(eventResponse.getTrackableId());
