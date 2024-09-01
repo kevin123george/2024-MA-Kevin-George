@@ -2,10 +2,7 @@ package com.hatake.cattleDB.cronjobs;
 
 import com.hatake.cattleDB.models.CronJobLog;
 import com.hatake.cattleDB.repository.CronJobLogRepository;
-import com.hatake.cattleDB.service.BeaconService;
-import com.hatake.cattleDB.service.EventService;
-import com.hatake.cattleDB.service.RouteService;
-import com.hatake.cattleDB.service.SummaryService;
+import com.hatake.cattleDB.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -33,46 +30,58 @@ public class DataSync {
     private BeaconService beaconService;
     @Autowired
     private CronJobLogRepository cronJobLogRepository;
+    @Autowired
+    private PositionService positionService;
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
 
-    @Scheduled(cron = "0 */10 * * * *")
-    public void syncEvents() {
-        logJobExecution("syncEvents", () -> {
-            logger.info("Starting event synchronization...");
-            eventService.fetchEvents();
-            logger.info("Event synchronization completed.");
+//    @Scheduled(cron = "0 */10 * * * *")
+//    public void syncEvents() {
+//        logJobExecution("syncEvents", () -> {
+//            logger.info("Starting event synchronization...");
+//            eventService.fetchEvents();
+//            logger.info("Event synchronization completed.");
+//        });
+//    }
+//
+//    @Scheduled(cron = "0 0 */3 * * *")
+//    public void syncRoutes() {
+//        logJobExecution("syncRoutes", () -> {
+//            logger.info("Starting route synchronization...");
+//            routeService.fetchRoutes();
+//            logger.info("Route synchronization completed.");
+//        });
+//    }
+//
+//
+//    @Scheduled(cron = "0 */10 * * * *")
+//    public void syncSummary() {
+//        logJobExecution("syncSummary", () -> {
+//            logger.info("Starting summary synchronization...");
+//            summaryService.fetchSummary();
+//            logger.info("Summary synchronization completed.");
+//        });
+//    }
+//
+//
+//    @Scheduled(cron = "0 */1 * * * *")
+//    public void syncBecons() {
+//        logJobExecution("syncSummary", () -> {
+//            logger.info("Starting summary synchronization...");
+//            beaconService.fetchAndSaveBeacons();
+//            logger.info("Summary synchronization completed.");
+//        });
+//    }
+
+    @Scheduled(fixedRate = 300000) // Run every 5 minutes (300,000 ms)
+    public void syncPositions() {
+        logJobExecution("syncPosition", () -> {
+            logger.info("Starting position synchronization...");
+            positionService.saveFetchedPositions();
+            logger.info("position synchronization completed.");
         });
     }
 
-    @Scheduled(cron = "0 0 */3 * * *")
-    public void syncRoutes() {
-        logJobExecution("syncRoutes", () -> {
-            logger.info("Starting route synchronization...");
-            routeService.fetchRoutes();
-            logger.info("Route synchronization completed.");
-        });
-    }
-
-
-    @Scheduled(cron = "0 */10 * * * *")
-    public void syncSummary() {
-        logJobExecution("syncSummary", () -> {
-            logger.info("Starting summary synchronization...");
-            summaryService.fetchSummary();
-            logger.info("Summary synchronization completed.");
-        });
-    }
-
-
-    @Scheduled(cron = "0 */1 * * * *")
-    public void syncBecons() {
-        logJobExecution("syncSummary", () -> {
-            logger.info("Starting summary synchronization...");
-            beaconService.fetchAndSaveBeacons();
-            logger.info("Summary synchronization completed.");
-        });
-    }
 
     private void logJobExecution(String jobName, Runnable job) {
         Instant startTime = Instant.now();

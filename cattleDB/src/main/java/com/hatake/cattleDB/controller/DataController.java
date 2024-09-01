@@ -1,11 +1,10 @@
 package com.hatake.cattleDB.controller;
 
 import com.hatake.cattleDB.dtos.EventResponse;
+import com.hatake.cattleDB.dtos.PositionResponse;
+import com.hatake.cattleDB.models.Position;
 import com.hatake.cattleDB.models.SummaryEntity;
-import com.hatake.cattleDB.service.DeviceService;
-import com.hatake.cattleDB.service.EventService;
-import com.hatake.cattleDB.service.RouteService;
-import com.hatake.cattleDB.service.SummaryService;
+import com.hatake.cattleDB.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +23,10 @@ public class DataController {
 
     @Autowired
     private SummaryService summaryService;
+
+    @Autowired
+    private PositionService positionService;
+
     private final DeviceService deviceService;
 
 
@@ -62,5 +65,14 @@ public class DataController {
     public String fetchAndStoreDevices() {
         deviceService.fetchAndStoreDevices();
         return "Devices fetched and stored successfully!";
+    }
+
+    @GetMapping("/positions")
+    public List<PositionResponse> getPositions() {
+        return positionService.fetchPositions();
+    }
+    @GetMapping("/positions/{deviceId}")
+    public List<Position> getPositionsByDeviceId(@PathVariable Long deviceId) {
+        return positionService.fetchPositionsByDevice(deviceId);
     }
 }

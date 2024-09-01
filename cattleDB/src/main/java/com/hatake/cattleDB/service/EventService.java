@@ -20,11 +20,12 @@ public class EventService {
 
     @Autowired
     private SafectoryClient safectoryClient;
+    String authorization = "Basic Basic sdsdsdsdsdsdsd====";
+
 
     private static final int BATCH_SIZE = 500; // Define the batch size
 
     public List<EventResponse> fetchEvents() {
-        String authorization = "Basic hahahahahahahahahahaha";
         EventRequest request = new EventRequest();
         request.setDeviceId(Collections.singletonList(0));
         request.setTrackableId(Collections.emptyList());

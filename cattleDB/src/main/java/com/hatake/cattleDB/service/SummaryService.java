@@ -24,7 +24,7 @@ public class SummaryService {
     private static final int BATCH_SIZE = 500; // You can adjust the batch size as needed
 
     public void fetchSummary() {
-        String authorization = "Basic hahahahahahahahahahaha";
+        String authorization = "Basic Basic sdsdsdsdsdsdsd====";
         SummaryRequest request = buildSummaryRequest();
 
         List<SummaryResponse> routes = safectoryClient.getSummary(authorization, request);
