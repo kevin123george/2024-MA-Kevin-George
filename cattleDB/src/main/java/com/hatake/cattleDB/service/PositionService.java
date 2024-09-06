@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,14 +21,18 @@ public class PositionService {
     @Autowired
     private SafectoryClient safectoryClient;
 
-    private final String authorization = "Basic Basic sdsdsdsdsdsdsd====";
+    private final String authorization = "Basic sdfffffffffffffff";
 
     public List<PositionResponse> fetchPositions() {
         return safectoryClient.getPositions(authorization);
     }
 
-    public List<Position> fetchPositionsByDevice(Long deviceId) {
-        return positionRepository.findByDeviceId(deviceId);
+    public List<Map<String, Object>> fetchPositionsByDevice(Long deviceId) {
+        return positionRepository.findPositionsByDeviceId(deviceId);
+    }
+
+    public List<Map<String, Object>> getEntriesCountByDeviceId() {
+        return positionRepository.countEntriesByDeviceId();
     }
 
     public Position toEntity(PositionResponse dto) {

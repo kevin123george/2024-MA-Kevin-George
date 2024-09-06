@@ -21,7 +21,7 @@ public class DeviceService {
 
     @Transactional
     public void fetchAndStoreDevices() {
-        String authorization = "Basic Basic sdsdsdsdsdsdsd====";
+        String authorization = "Basic sdfffffffffffffff";
 
         // Fetch the devices from the external API
         List<DeviceResponse> deviceResponses = safectoryClient.getDevices(

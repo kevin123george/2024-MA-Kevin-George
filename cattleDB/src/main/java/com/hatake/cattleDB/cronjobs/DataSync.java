@@ -34,7 +34,7 @@ public class DataSync {
     private PositionService positionService;
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
-
+//
 //    @Scheduled(cron = "0 */10 * * * *")
 //    public void syncEvents() {
 //        logJobExecution("syncEvents", () -> {
@@ -73,7 +73,7 @@ public class DataSync {
 //        });
 //    }
 
-    @Scheduled(fixedRate = 300000) // Run every 5 minutes (300,000 ms)
+    @Scheduled(fixedRate = 600000) // Run every 5 minutes (300,000 ms)
     public void syncPositions() {
         logJobExecution("syncPosition", () -> {
             logger.info("Starting position synchronization...");

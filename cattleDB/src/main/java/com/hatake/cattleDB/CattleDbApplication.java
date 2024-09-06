@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableFeignClients
-@EnableScheduling // Enable Spring's scheduled task execution
+//@EnableScheduling // Enable Spring's scheduled task execution
 public class CattleDbApplication {
 
 	public static void main(String[] args) {

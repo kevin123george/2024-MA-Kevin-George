@@ -20,7 +20,7 @@ public class EventService {
 
     @Autowired
     private SafectoryClient safectoryClient;
-    String authorization = "Basic Basic sdsdsdsdsdsdsd====";
+    String authorization = "Basic sdfffffffffffffff";
 
 
     private static final int BATCH_SIZE = 500; // Define the batch size

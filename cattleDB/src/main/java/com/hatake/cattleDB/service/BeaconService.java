@@ -19,7 +19,7 @@ public class BeaconService {
 
     @Autowired
     private BeaconRepository beaconRepository;
-    String authorization = "Basic Basic sdsdsdsdsdsdsd====";
+    String authorization = "Basic sdfffffffffffffff";
 
     // Method to fetch and save beacons
     @Transactional
