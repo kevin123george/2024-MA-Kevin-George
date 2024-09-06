@@ -21,6 +21,7 @@ import {
   IconUserShield,
   IconUsers,
   IconLock,
+  IconDatabase,
 } from '@tabler/icons-react'
 
 export interface NavLink {
@@ -46,6 +47,12 @@ export const sidelinks: SideLink[] = [
     label: '3',
     href: '/tasks',
     icon: <IconChecklist size={18} />,
+  },
+  {
+    title: 'CattleDB',
+    label: '',
+    href: '/cattleDB',
+    icon: <IconDatabase size={18} />,
   },
   {
     title: 'Chats',

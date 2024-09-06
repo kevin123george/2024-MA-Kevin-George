@@ -2,6 +2,7 @@ package com.hatake.cattleDB.controller;
 
 import com.hatake.cattleDB.dtos.EventResponse;
 import com.hatake.cattleDB.dtos.PositionResponse;
+import com.hatake.cattleDB.models.Position;
 import com.hatake.cattleDB.models.SummaryEntity;
 import com.hatake.cattleDB.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,8 +69,8 @@ public class DataController {
     }
 
     @GetMapping("/positions")
-    public List<PositionResponse> getPositions() {
-        return positionService.fetchPositions();
+    public List<Position> getPositions() {
+        return positionService.getPositions();
     }
     @GetMapping("/positions/{deviceId}")
     public List<Map<String, Object>> getPositionsByDeviceId(@PathVariable Long deviceId) {

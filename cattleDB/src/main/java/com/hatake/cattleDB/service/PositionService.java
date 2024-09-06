@@ -27,6 +27,12 @@ public class PositionService {
         return safectoryClient.getPositions(authorization);
     }
 
+
+    public List<Position> getPositions() {
+        return positionRepository.findAll();
+    }
+
+
     public List<Map<String, Object>> fetchPositionsByDevice(Long deviceId) {
         return positionRepository.findPositionsByDeviceId(deviceId);
     }

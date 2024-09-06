@@ -59,6 +59,12 @@ const router = createBrowserRouter([
         }),
       },
       {
+        path: 'cattleDB',
+        lazy: async () => ({
+          Component: (await import('@/pages/cattleDB')).default,
+        }),
+      },
+      {
         path: 'chats',
         lazy: async () => ({
           Component: (await import('@/pages/chats')).default,
