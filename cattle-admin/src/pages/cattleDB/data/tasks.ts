@@ -1,4 +1,45 @@
-export const tasks = [
+
+
+
+
+import axios from 'axios'
+import { z } from 'zod'
+import { taskSchema, Task } from '../data/schema' // Import your schema
+
+// Function to fetch and validate data
+const fetchDataAndAssign = async () => {
+  try {
+    // Fetch data from the API
+    const response = await axios.get('http://localhost:8080/api/positions/177657227')
+
+    // Validate the data using Zod schema (assuming response is an array of tasks)
+    const validatedData: Task[] = taskSchema.array().parse(response.data)
+
+    // Assign the validated data to a variable
+    const tasks: Task[] = validatedData
+
+    console.log('Validated tasks:', tasks) // You can now work with the validated data
+
+    return tasks // You can return this or do further processing
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      // Handle validation errors
+      console.error('Validation error:', err.errors)
+    } else if (axios.isAxiosError(err)) {
+      // Handle Axios-specific errors
+      console.error('Error fetching data:', err.message)
+    } else {
+      // Handle any other errors
+      console.error('Unexpected error:', (err as Error).message)
+    }
+  }
+}
+
+// Call the function to fetch and validate data
+export const tasks = fetchDataAndAssign();
+
+
+export const tassdsdks = [
   {
       "deviceid": 177657227,
       "longitude": 12.200226187705992,
