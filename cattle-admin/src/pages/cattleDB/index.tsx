@@ -18,7 +18,7 @@ export default function Tasks() {
     const fetchTasks = async () => {
       try {
         // Fetching the data from API
-        const response = await axios.get('http://localhost:8080/api/positions/177657227')
+        const response = await axios.get('http://localhost:8080/api/positions')
 
         // Validate the response data against the schema
         const validatedTasks = taskSchema.array().parse(response.data)

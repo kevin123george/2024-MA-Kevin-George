@@ -1,15 +1,17 @@
 import { z } from 'zod'
 
-// We're keeping a simple non-relational schema here.
-// IRL, you will have a schema for your data models.
+// Define a schema for a string that replaces null with an empty string
+const nullableString = z.preprocess((val) => (val === null ? "" : val), z.string());
+
+// Define the main schema, using nullableString where needed
 export const taskSchema = z.object({
   id: z.number(),
   deviceid: z.number(),
   longitude: z.number(),
-  protocol: z.string(),
-  devicename: z.string(),
+  protocol: nullableString,  // Convert null to empty string
+  devicename: nullableString,  // Convert null to empty string
   latitude: z.number(),
-  devicetime: z.string(),
-})
+  devicetime: nullableString,  // Convert null to empty string
+});
 
-export type Task = z.infer<typeof taskSchema>
+export type Task = z.infer<typeof taskSchema>;
