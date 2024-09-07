@@ -2,6 +2,7 @@ package com.hatake.cattleDB.controller;
 
 import com.hatake.cattleDB.dtos.EventResponse;
 import com.hatake.cattleDB.dtos.PositionResponse;
+import com.hatake.cattleDB.models.Beacon;
 import com.hatake.cattleDB.models.Position;
 import com.hatake.cattleDB.models.SummaryEntity;
 import com.hatake.cattleDB.service.*;
@@ -13,7 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin("http://localhost:3000/")
+@CrossOrigin("http://localhost:5173/")
 public class DataController {
 
     @Autowired
@@ -27,6 +28,9 @@ public class DataController {
 
     @Autowired
     private PositionService positionService;
+
+    @Autowired
+    private BeaconService beaconService;
 
     private final DeviceService deviceService;
 
@@ -69,8 +73,8 @@ public class DataController {
     }
 
     @GetMapping("/positions")
-    public List<Position> getPositions() {
-        return positionService.getPositions();
+    public List<Map<String, Object>> getPositions() {
+        return positionService.getLatestPositions();
     }
     @GetMapping("/positions/{deviceId}")
     public List<Map<String, Object>> getPositionsByDeviceId(@PathVariable Long deviceId) {
@@ -80,4 +84,9 @@ public class DataController {
     public List<Map<String, Object>> getEntriesCountByDeviceId() {
         return positionService.getEntriesCountByDeviceId();
     }
+    @GetMapping("/beacons")
+    public List<Beacon> getBeacons() {
+        return beaconService.getBeacons();
+    }
+
 }

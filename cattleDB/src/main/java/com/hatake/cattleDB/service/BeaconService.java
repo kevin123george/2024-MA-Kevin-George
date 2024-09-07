@@ -54,4 +54,8 @@ public class BeaconService {
         beacon.setRoleGroupId(dto.getRoleGroupId());
         return beacon;
     }
+
+    public List<Beacon> getBeacons() {
+        return beaconRepository.findAll();
+    }
 }

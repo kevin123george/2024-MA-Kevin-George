@@ -20,6 +20,17 @@ public interface PositionRepository extends JpaRepository<Position, Long> {
 List<Map<String, Object>> findPositionsByDeviceId(@Param("deviceId") Long deviceId);
 
 
+    @Query(value = """
+        SELECT DISTINCT ON (p.device_id) 
+        p.id, p.protocol, p.device_time AS deviceTime, 
+        p.latitude, p.longitude, 
+        p.device_name AS deviceName, p.device_id AS deviceId
+        FROM Position p
+        ORDER BY p.device_id, p.device_time DESC;
+        """, nativeQuery = true)
+    List<Map<String, Object>> getLatestPositions();
+
+
 
 @Query("SELECT p.deviceId as deviceId, COUNT(p.id) as entryCount FROM Position p GROUP BY p.deviceId")
     List<Map<String, Object>> countEntriesByDeviceId();
