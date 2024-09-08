@@ -4,7 +4,7 @@ import { z } from 'zod'
 const nullableString = z.preprocess((val) => (val === null ? "" : val), z.string());
 
 // Define the main schema, using nullableString where needed
-export const taskSchema = z.object({
+export const positionSchema = z.object({
   id: z.number(),
   deviceid: z.number(),
   longitude: z.number(),
@@ -14,4 +14,4 @@ export const taskSchema = z.object({
   devicetime: nullableString,  // Convert null to empty string
 });
 
-export type Task = z.infer<typeof taskSchema>;
+export type Position = z.infer<typeof positionSchema>;

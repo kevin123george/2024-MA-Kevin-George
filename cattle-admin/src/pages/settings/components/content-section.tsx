@@ -19,7 +19,7 @@ export default function ContentSection({
       </div>
       <Separator className='my-4 flex-none' />
       <div className='faded-bottom -mx-4 flex-1 overflow-auto scroll-smooth px-4 md:pb-16'>
-        <div className='lg:max-w-xl'>{children}</div>
+        <div className='lg:max-xl'>{children}</div>
       </div>
     </div>
   )

@@ -69,7 +69,7 @@ const sidebarNavItems = [
     href: '/settings/notifications',
   },
   {
-    title: 'Display',
+    title: 'Data Sync Configuration',
     icon: <IconBrowserCheck size={18} />,
     href: '/settings/display',
   },
