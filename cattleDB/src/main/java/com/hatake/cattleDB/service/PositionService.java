@@ -21,8 +21,7 @@ public class PositionService {
     @Autowired
     private SafectoryClient safectoryClient;
 
-    String authorization = "Basic a2V2aW4uZ2VvcmdlQHN0dWQudW5pLWJhbWJlcmcuZGU6QmxhY2tiaXJkMTIzIQ==";
-    public List<PositionResponse> fetchPositions() {
+    public List<PositionResponse> fetchPositions(String authorization) {
         return safectoryClient.getPositions(authorization);
     }
 
@@ -76,8 +75,8 @@ public class PositionService {
     }
 
     @Transactional
-    public void saveFetchedPositions() {
-        List<PositionResponse> positionResponses = fetchPositions();
+    public void saveFetchedPositions(String authorization) {
+        List<PositionResponse> positionResponses = fetchPositions(authorization);
         List<Position> positions = positionResponses.stream()
                 .map(this::toEntity)
                 .collect(Collectors.toList());

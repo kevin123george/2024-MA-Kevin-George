@@ -48,39 +48,39 @@ export const sidelinks: SideLink[] = [
         icon: <IconCurrentLocation size={18} />,
       },
       {
-        title: 'Devices',
+        title: 'Beacons',
         label: '',
-        href: '/devices',
+        href: '/apps',
         icon: <IconDeviceSdCard size={18} />,
       },
     ]
   },
-  {
-    title: 'Beacons',
-    label: '',
-    href: '/apps',
-    icon: <IconApps size={18} />,
-  },
-  {
-    title: 'Requests',
-    label: '10',
-    href: '/requests',
-    icon: <IconRouteAltLeft size={18} />,
-    sub: [
-      {
-        title: 'Trucks',
-        label: '9',
-        href: '/trucks',
-        icon: <IconTruck size={18} />,
-      },
-      {
-        title: 'Cargos',
-        label: '',
-        href: '/cargos',
-        icon: <IconBoxSeam size={18} />,
-      },
-    ],
-  },
+  // {
+  //   title: 'Beacons',
+  //   label: '',
+  //   href: '/apps',
+  //   icon: <IconApps size={18} />,
+  // },
+  // {
+  //   title: 'Requests',
+  //   label: '10',
+  //   href: '/requests',
+  //   icon: <IconRouteAltLeft size={18} />,
+  //   sub: [
+  //     {
+  //       title: 'Trucks',
+  //       label: '9',
+  //       href: '/trucks',
+  //       icon: <IconTruck size={18} />,
+  //     },
+  //     {
+  //       title: 'Cargos',
+  //       label: '',
+  //       href: '/cargos',
+  //       icon: <IconBoxSeam size={18} />,
+  //     },
+  //   ],
+  // },
   {
     title: 'Settings',
     label: '',

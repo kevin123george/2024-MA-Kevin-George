@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   IconAdjustmentsHorizontal,
   IconSortAscendingLetters,
@@ -17,33 +17,51 @@ import { Separator } from '@/components/ui/separator'
 import ThemeSwitch from '@/components/theme-switch'
 import { UserNav } from '@/components/user-nav'
 import { Button } from '@/components/custom/button'
-import { apps } from './data'
 
-const appText = new Map<string, string>([
-  ['all', 'All Apps'],
-  ['connected', 'Connected'],
-  ['notConnected', 'Not Connected'],
+const statusText = new Map<string, string>([
+  ['all', 'All Devices'],
+  ['online', 'Online'],
+  ['offline', 'Offline'],
 ])
 
-export default function Apps() {
+export default function Devices() {
   const [sort, setSort] = useState('ascending')
-  const [appType, setAppType] = useState('all')
+  const [statusFilter, setStatusFilter] = useState('all')
   const [searchTerm, setSearchTerm] = useState('')
+  const [devices, setDevices] = useState([])
 
-  const filteredApps = apps
+  // Fetch device data from API
+  useEffect(() => {
+    async function fetchDevices() {
+      try {
+        const response = await fetch('http://localhost:8080/api/devices')
+        const data = await response.json()
+        setDevices(data)
+      } catch (error) {
+        console.error('Error fetching devices:', error)
+      }
+    }
+
+    fetchDevices()
+  }, [])
+
+  // Sorting and filtering the devices based on search, status, and sort
+  const filteredDevices = devices
     .sort((a, b) =>
       sort === 'ascending'
         ? a.name.localeCompare(b.name)
         : b.name.localeCompare(a.name)
     )
-    .filter((app) =>
-      appType === 'connected'
-        ? app.connected
-        : appType === 'notConnected'
-          ? !app.connected
-          : true
+    .filter((device) =>
+      statusFilter === 'online'
+        ? device.status === 'online'
+        : statusFilter === 'offline'
+        ? device.status === 'offline'
+        : true
     )
-    .filter((app) => app.name.toLowerCase().includes(searchTerm.toLowerCase()))
+    .filter((device) =>
+      device.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
 
   return (
     <Layout fixed>
@@ -60,29 +78,27 @@ export default function Apps() {
       {/* ===== Content ===== */}
       <Layout.Body className='flex flex-col'>
         <div>
-          <h1 className='text-2xl font-bold tracking-tight'>
-            App Integrations
-          </h1>
+          <h1 className='text-2xl font-bold tracking-tight'>Device Integrations</h1>
           <p className='text-muted-foreground'>
-            Here&apos;s a list of your apps for the integration!
+            Here&apos;s a list of your devices!
           </p>
         </div>
         <div className='my-4 flex items-end justify-between sm:my-0 sm:items-center'>
           <div className='flex flex-col gap-4 sm:my-4 sm:flex-row'>
             <Input
-              placeholder='Filter apps...'
+              placeholder='Filter devices...'
               className='h-9 w-40 lg:w-[250px]'
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <Select value={appType} onValueChange={setAppType}>
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
               <SelectTrigger className='w-36'>
-                <SelectValue>{appText.get(appType)}</SelectValue>
+                <SelectValue>{statusText.get(statusFilter)}</SelectValue>
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value='all'>All Apps</SelectItem>
-                <SelectItem value='connected'>Connected</SelectItem>
-                <SelectItem value='notConnected'>Not Connected</SelectItem>
+                <SelectItem value='all'>All Devices</SelectItem>
+                <SelectItem value='online'>Online</SelectItem>
+                <SelectItem value='offline'>Offline</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -111,28 +127,37 @@ export default function Apps() {
         </div>
         <Separator className='shadow' />
         <ul className='faded-bottom no-scrollbar grid gap-4 overflow-auto pb-16 pt-4 md:grid-cols-2 lg:grid-cols-3'>
-          {filteredApps.map((app) => (
+          {filteredDevices.map((device) => (
             <li
-              key={app.name}
+              key={device.uniqueId}
               className='rounded-lg border p-4 hover:shadow-md'
             >
-              <div className='mb-8 flex items-center justify-between'>
-                <div
-                  className={`flex size-10 items-center justify-center rounded-lg bg-muted p-2`}
-                >
-                  {app.logo}
+              <div className='mb-4 flex items-start justify-between'>
+                <div className='flex flex-col'>
+                  <h2 className='text-lg font-semibold'>{device.name}</h2> {/* Adjusted font size */}
+                  <span className='text-sm text-muted-foreground'>{device.uniqueId}</span>
                 </div>
                 <Button
                   variant='outline'
                   size='sm'
-                  className={`${app.connected ? 'border border-blue-300 bg-blue-50 hover:bg-blue-100 dark:border-blue-700 dark:bg-blue-950 dark:hover:bg-blue-900' : ''}`}
+                  className={`${
+                    device.status === 'online'
+                      ? 'border border-green-300 bg-green-50 hover:bg-green-100 dark:border-green-700 dark:bg-green-950 dark:hover:bg-green-900'
+                      : 'border border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-950 dark:hover:bg-gray-900'
+                  }`}
                 >
-                  {app.connected ? 'Connected' : 'Connect'}
+                  {device.status === 'online' ? 'Online' : 'Offline'}
                 </Button>
               </div>
               <div>
-                <h2 className='mb-1 font-semibold'>{app.name}</h2>
-                <p className='line-clamp-2 text-gray-500'>{app.desc}</p>
+                <h3 className='mb-1 text-sm font-semibold'>Model: {device.model || 'Unknown'}</h3>
+                <p className='text-sm text-gray-500'>Battery: {device.batteryLevel}%</p>
+                <p className='text-sm text-gray-500'>
+                  Last Update: {new Date(device.lastUpdate).toLocaleString()}
+                </p>
+                <p className='text-sm text-gray-500'>
+                  Firmware: {device.firmwareVersion || 'N/A'}
+                </p>
               </div>
             </li>
           ))}

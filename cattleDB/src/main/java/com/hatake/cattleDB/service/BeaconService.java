@@ -19,11 +19,10 @@ public class BeaconService {
 
     @Autowired
     private BeaconRepository beaconRepository;
-    String authorization = "Basic sdfffffffffffffff";
 
     // Method to fetch and save beacons
     @Transactional
-    public List<Beacon> fetchAndSaveBeacons() {
+    public List<Beacon> fetchAndSaveBeacons(String authorization) {
 
         // Fetch beacons from the external service via Feign
         List<BeaconResponse> beaconResponseDTOs = safectoryClient.getBeacons(authorization, "json", ",");

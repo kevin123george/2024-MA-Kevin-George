@@ -26,8 +26,7 @@ public class RouteService {
     private RouteRepository routeRepository;
 
     @Transactional
-    public void fetchRoutes() {
-        String authorization = "Basic sdfffffffffffffff";
+    public void fetchRoutes(String authorization) {
         RouteRequest request = buildRouteRequest();
 
         logger.info("Fetching routes from external service...");

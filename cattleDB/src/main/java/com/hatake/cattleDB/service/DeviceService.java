@@ -20,8 +20,7 @@ public class DeviceService {
     private final DeviceRepository deviceRepository;
 
     @Transactional
-    public void fetchAndStoreDevices() {
-        String authorization = "Basic sdfffffffffffffff";
+    public void fetchAndStoreDevices(String authorization) {
 
         // Fetch the devices from the external API
         List<DeviceResponse> deviceResponses = safectoryClient.getDevices(
@@ -32,16 +31,20 @@ public class DeviceService {
         List<Device> devices = deviceResponses.stream()
                 .map(this::convertToDeviceEntity)
                 .collect(Collectors.toList());
-
+        deviceRepository.deleteAll();
         // Save all devices in a single transaction
         deviceRepository.saveAll(devices);
+    }
+
+    public List<Device> getDevices(){
+        return deviceRepository.findAll();
     }
 
     public Device convertToDeviceEntity(DeviceResponse response) {
         Device device = new Device();
         device.setId(response.getId());
         device.setName(response.getName());
-//        device.setAttributes(response.getAttributes()); // JSONB field
+        device.setAttributes(response.getAttributes()); // JSONB field
         device.setUniqueId(response.getUniqueId());
         device.setStatus(response.getStatus());
         device.setLastUpdate(response.getLastUpdate());

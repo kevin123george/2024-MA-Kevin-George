@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Layout } from '@/components/custom/layout'
 import { Button } from '@/components/custom/button'
 import {
@@ -10,193 +11,225 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import ThemeSwitch from '@/components/theme-switch'
 import { UserNav } from '@/components/user-nav'
-import { RecentSales } from './components/recent-sales'
-import { Overview } from './components/overview'
+import { Line, Bar } from 'react-chartjs-2'
+import 'chart.js/auto'
+import { MapContainer, TileLayer, Marker } from 'react-leaflet'
+import 'leaflet/dist/leaflet.css'
 
 export default function Dashboard() {
+  const [beaconAnalytics, setBeaconAnalytics] = useState(null)
+  const [cronJobAnalytics, setCronJobAnalytics] = useState(null)
+  const [routeAnalytics, setRouteAnalytics] = useState(null)
+
+  useEffect(() => {
+    async function fetchBeaconAnalytics() {
+      try {
+        const response = await fetch('http://localhost:8080/api/analytics/beacons')
+        const data = await response.json()
+        setBeaconAnalytics(data)
+      } catch (error) {
+        console.error('Error fetching beacon analytics:', error)
+      }
+    }
+    fetchBeaconAnalytics()
+  }, [])
+
+  useEffect(() => {
+    async function fetchCronJobAnalytics() {
+      try {
+        const response = await fetch('http://localhost:8080/api/analytics/cron-jobs')
+        const data = await response.json()
+        setCronJobAnalytics(data)
+      } catch (error) {
+        console.error('Error fetching cron job analytics:', error)
+      }
+    }
+    fetchCronJobAnalytics()
+  }, [])
+
+  useEffect(() => {
+    async function fetchRouteAnalytics() {
+      try {
+        const response = await fetch('http://localhost:8080/api/analytics/routes')
+        const data = await response.json()
+        setRouteAnalytics(data)
+      } catch (error) {
+        console.error('Error fetching route analytics:', error)
+      }
+    }
+    fetchRouteAnalytics()
+  }, [])
+
+  // Line chart data for beacon battery levels
+  const beaconBatteryData = {
+    labels: beaconAnalytics
+      ? beaconAnalytics.latestBeacons.map((beacon) => beacon.name)
+      : [],
+    datasets: [
+      {
+        label: 'Battery Level (%)',
+        data: beaconAnalytics
+          ? beaconAnalytics.latestBeacons.map((beacon) => beacon.batteryLevel || 0)
+          : [],
+        fill: false,
+        borderColor: '#4CAF50',
+        tension: 0.1,
+      },
+    ],
+  }
+
+  // Bar chart comparing total beacons, cron jobs, and routes
+  const comparisonData = {
+    labels: ['Beacons', 'Cron Jobs', 'Routes'],
+    datasets: [
+      {
+        label: 'Total Count',
+        data: [
+          beaconAnalytics ? beaconAnalytics.totalBeacons : 0,
+          cronJobAnalytics ? cronJobAnalytics.totalCronJobsExecuted : 0,
+          routeAnalytics ? routeAnalytics.totalRoutes : 0,
+        ],
+        backgroundColor: ['#FFC107', '#03A9F4', '#8BC34A'],
+      },
+    ],
+  }
+
+  // Map markers for routes
+  const routeMarkers = routeAnalytics
+    ? routeAnalytics.latestRoutes.map((route) => ({
+        position: [route.latitude, route.longitude],
+        name: route.beaconName,
+      }))
+    : []
+
   return (
     <Layout>
-      {/* ===== Top Heading ===== */}
       <Layout.Header>
-        {/* <TopNav links={topNav} /> */}
         <div className='ml-auto flex items-center space-x-4'>
           <ThemeSwitch />
           <UserNav />
         </div>
       </Layout.Header>
 
-      {/* ===== Main ===== */}
       <Layout.Body>
         <div className='mb-2 flex items-center justify-between space-y-2'>
           <h1 className='text-2xl font-bold tracking-tight'>Dashboard</h1>
-          {/* <div className='flex items-center space-x-2'>
-            <Button>Download</Button>
-          </div> */}
         </div>
-        <Tabs
-          orientation='vertical'
-          defaultValue='overview'
-          className='space-y-4'
-        >
+
+        <Tabs orientation='vertical' defaultValue='overview' className='space-y-4'>
           <div className='w-full overflow-x-auto pb-2'>
             <TabsList>
               <TabsTrigger value='overview'>Overview</TabsTrigger>
               <TabsTrigger value='analytics'>Analytics</TabsTrigger>
-              <TabsTrigger value='reports'>Reports</TabsTrigger>
-              <TabsTrigger value='notifications'>Notifications</TabsTrigger>
             </TabsList>
           </div>
           <TabsContent value='overview' className='space-y-4'>
             <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
+              {/* Total Beacons */}
               <Card>
-                <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                  <CardTitle className='text-sm font-medium'>
-                    Total Revenue
-                  </CardTitle>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    viewBox='0 0 24 24'
-                    fill='none'
-                    stroke='currentColor'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth='2'
-                    className='h-4 w-4 text-muted-foreground'
-                  >
-                    <path d='M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6' />
-                  </svg>
+                <CardHeader>
+                  <CardTitle>Total Beacons entries</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>$45,231.89</div>
-                  <p className='text-xs text-muted-foreground'>
-                    +20.1% from last month
-                  </p>
+                  <div className='text-2xl font-bold'>
+                    {beaconAnalytics ? beaconAnalytics.totalBeacons : 'Loading...'}
+                  </div>
                 </CardContent>
               </Card>
+
+              {/* Total Cron Jobs */}
               <Card>
-                <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                  <CardTitle className='text-sm font-medium'>
-                    Subscriptions
-                  </CardTitle>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    viewBox='0 0 24 24'
-                    fill='none'
-                    stroke='currentColor'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth='2'
-                    className='h-4 w-4 text-muted-foreground'
-                  >
-                    <path d='M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2' />
-                    <circle cx='9' cy='7' r='4' />
-                    <path d='M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75' />
-                  </svg>
+                <CardHeader>
+                  <CardTitle>Total Cron Jobs Executed</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>+2350</div>
-                  <p className='text-xs text-muted-foreground'>
-                    +180.1% from last month
-                  </p>
+                  <div className='text-2xl font-bold'>
+                    {cronJobAnalytics ? cronJobAnalytics.totalCronJobsExecuted : 'Loading...'}
+                  </div>
                 </CardContent>
               </Card>
+
+              {/* Total Routes */}
               <Card>
-                <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                  <CardTitle className='text-sm font-medium'>Sales</CardTitle>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    viewBox='0 0 24 24'
-                    fill='none'
-                    stroke='currentColor'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth='2'
-                    className='h-4 w-4 text-muted-foreground'
-                  >
-                    <rect width='20' height='14' x='2' y='5' rx='2' />
-                    <path d='M2 10h20' />
-                  </svg>
+                <CardHeader>
+                  <CardTitle>Total Routes</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>+12,234</div>
-                  <p className='text-xs text-muted-foreground'>
-                    +19% from last month
-                  </p>
+                  <div className='text-2xl font-bold'>
+                    {routeAnalytics ? routeAnalytics.totalRoutes : 'Loading...'}
+                  </div>
                 </CardContent>
               </Card>
+
+              {/* Bar chart for comparison */}
               <Card>
-                <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                  <CardTitle className='text-sm font-medium'>
-                    Active Now
-                  </CardTitle>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    viewBox='0 0 24 24'
-                    fill='none'
-                    stroke='currentColor'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth='2'
-                    className='h-4 w-4 text-muted-foreground'
-                  >
-                    <path d='M22 12h-4l-3 9L9 3l-3 9H2' />
-                  </svg>
+                <CardHeader>
+                  <CardTitle>Comparison</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>+573</div>
-                  <p className='text-xs text-muted-foreground'>
-                    +201 since last hour
-                  </p>
+                  <Bar data={comparisonData} />
                 </CardContent>
               </Card>
             </div>
-            <div className='grid grid-cols-1 gap-4 lg:grid-cols-7'>
-              <Card className='col-span-1 lg:col-span-4'>
-                <CardHeader>
-                  <CardTitle>Overview</CardTitle>
-                </CardHeader>
-                <CardContent className='pl-2'>
-                  <Overview />
-                </CardContent>
-              </Card>
-              <Card className='col-span-1 lg:col-span-3'>
-                <CardHeader>
-                  <CardTitle>Recent Sales</CardTitle>
-                  <CardDescription>
-                    You made 265 sales this month.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <RecentSales />
-                </CardContent>
-              </Card>
-            </div>
+
+            {/* Line chart for beacon battery levels */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Beacon Battery Levels</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Line data={beaconBatteryData} />
+              </CardContent>
+            </Card>
+
+            {/* Failed Cron Jobs */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Failed Cron Jobs</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <table className='min-w-full table-auto'>
+                  <thead>
+                    <tr>
+                      <th>Job Name</th>
+                      <th>Start Time</th>
+                      <th>Error</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cronJobAnalytics &&
+                      cronJobAnalytics.failedCronJobs.map((job) => (
+                        <tr key={job.id}>
+                          <td>{job.jobName}</td>
+                          <td>{new Date(job.startTime).toLocaleString()}</td>
+                          <td>{job.errorMessage}</td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </CardContent>
+            </Card>
+
+            {/* Map for routes */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Routes Map</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <MapContainer center={[49.6816, 12.2002]} zoom={13} style={{ height: '400px' }}>
+                  <TileLayer
+                    url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                    attribution='&copy; OpenStreetMap contributors'
+                  />
+                  {routeMarkers.map((marker, index) => (
+                    <Marker key={index} position={marker.position} />
+                  ))}
+                </MapContainer>
+              </CardContent>
+            </Card>
           </TabsContent>
         </Tabs>
       </Layout.Body>
     </Layout>
   )
 }
-
-const topNav = [
-  {
-    title: 'Overview',
-    href: 'dashboard/overview',
-    isActive: true,
-  },
-  {
-    title: 'Customers',
-    href: 'dashboard/customers',
-    isActive: false,
-  },
-  {
-    title: 'Products',
-    href: 'dashboard/products',
-    isActive: false,
-  },
-  {
-    title: 'Settings',
-    href: 'dashboard/settings',
-    isActive: false,
-  },
-]

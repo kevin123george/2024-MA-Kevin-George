@@ -7,7 +7,7 @@ export default function SettingsNotifications() {
       title='Notifications'
       desc='Configure how you receive notifications.'
     >
-      <NotificationsForm />
+      {/* <NotificationsForm /> */}
     </ContentSection>
   )
 }

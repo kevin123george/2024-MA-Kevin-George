@@ -1,5 +1,6 @@
 package com.hatake.cattleDB.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,12 +19,14 @@ public class Device {
 
     private String name;
 
+
+    @JsonIgnore
     // Using the custom JSONB type from the Hibernate Types library
-//    @ElementCollection(fetch = FetchType.EAGER)
-//    @CollectionTable(name = "device_attributes", joinColumns = @JoinColumn(name = "device_id"))
-//    @MapKeyColumn(name = "attribute_name")
-//    @Column(name = "attribute_value", columnDefinition = "TEXT")
-//    private Map<String, String> attributes;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "device_attributes", joinColumns = @JoinColumn(name = "beacon_id"))
+    @MapKeyColumn(name = "attribute_name")
+    @Column(name = "attribute_value", columnDefinition = "TEXT")
+    private Map<String, String> attributes;
 
     private String uniqueId;
     private String status;
@@ -56,6 +59,7 @@ public class Device {
     private String lastAsnFail;
     private OffsetDateTime lastAsnCookie;
 
+    @JsonIgnore
     @ElementCollection
     private List<Long> asnConfigs;
 

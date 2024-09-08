@@ -1,6 +1,8 @@
 package com.hatake.cattleDB.cronjobs;
 
+import com.hatake.cattleDB.models.CronJobConfigEntity;
 import com.hatake.cattleDB.models.CronJobLog;
+import com.hatake.cattleDB.repository.CronJobConfigRepository;
 import com.hatake.cattleDB.repository.CronJobLogRepository;
 import com.hatake.cattleDB.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,61 +30,89 @@ public class DataSync {
 
     @Autowired
     private BeaconService beaconService;
+
     @Autowired
     private CronJobLogRepository cronJobLogRepository;
+
     @Autowired
     private PositionService positionService;
 
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
-//
-//    @Scheduled(cron = "0 */10 * * * *")
-//    public void syncEvents() {
-//        logJobExecution("syncEvents", () -> {
-//            logger.info("Starting event synchronization...");
-//            eventService.fetchEvents();
-//            logger.info("Event synchronization completed.");
-//        });
-//    }
-//
-//    @Scheduled(cron = "0 0 */3 * * *")
-//    public void syncRoutes() {
-//        logJobExecution("syncRoutes", () -> {
-//            logger.info("Starting route synchronization...");
-//            routeService.fetchRoutes();
-//            logger.info("Route synchronization completed.");
-//        });
-//    }
-//
-//
-//    @Scheduled(cron = "0 */10 * * * *")
-//    public void syncSummary() {
-//        logJobExecution("syncSummary", () -> {
-//            logger.info("Starting summary synchronization...");
-//            summaryService.fetchSummary();
-//            logger.info("Summary synchronization completed.");
-//        });
-//    }
-//
-//
-//    @Scheduled(cron = "0 */1 * * * *")
-//    public void syncBecons() {
-//        logJobExecution("syncSummary", () -> {
-//            logger.info("Starting summary synchronization...");
-//            beaconService.fetchAndSaveBeacons();
-//            logger.info("Summary synchronization completed.");
-//        });
-//    }
+    @Autowired
+    private CronJobConfigRepository cronJobConfigRepository;
 
-//    @Scheduled(fixedRate = 600000) // Run every 5 minutes (300,000 ms)
-        @Scheduled(fixedRate = 2000)
-        public void syncPositions() {
-        logJobExecution("syncPosition", () -> {
-            logger.info("Starting position synchronization...");
-            positionService.saveFetchedPositions();
-            logger.info("position synchronization completed.");
-        });
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
+
+    String authorization = "Basic a2V2aW4uZ2VvcmdlQHN0dWQudW5pLWJhbWJlcmcuZGU6QmxhY2tiaXJkMTIzIQ==";
+
+    @Scheduled(cron = "#{@cronJobConfigRepository.findByJobName('syncEvents')?.cronExpression ?: '0 */10 * * * *'}")
+    public void syncEvents() {
+        if (isJobEnabled("syncEvents")) {
+            logJobExecution("syncEvents", () -> {
+                logger.info("Starting event synchronization...");
+                eventService.fetchEvents(authorization);
+                logger.info("Event synchronization completed.");
+            });
+        } else {
+            logger.info("syncEvents job is disabled.");
+        }
     }
 
+    @Scheduled(cron = "#{@cronJobConfigRepository.findByJobName('syncRoutes')?.cronExpression ?: '0 0 */3 * * *'}")
+    public void syncRoutes() {
+        if (isJobEnabled("syncRoutes")) {
+            logJobExecution("syncRoutes", () -> {
+                logger.info("Starting route synchronization...");
+                routeService.fetchRoutes(authorization);
+                logger.info("Route synchronization completed.");
+            });
+        } else {
+            logger.info("syncRoutes job is disabled.");
+        }
+    }
+
+    @Scheduled(cron = "#{@cronJobConfigRepository.findByJobName('syncSummary')?.cronExpression ?: '0 */10 * * * *'}")
+    public void syncSummary() {
+        if (isJobEnabled("syncSummary")) {
+            logJobExecution("syncSummary", () -> {
+                logger.info("Starting summary synchronization...");
+                summaryService.fetchSummary(authorization);
+                logger.info("Summary synchronization completed.");
+            });
+        } else {
+            logger.info("syncSummary job is disabled.");
+        }
+    }
+
+    @Scheduled(cron = "#{@cronJobConfigRepository.findByJobName('syncBeacons')?.cronExpression ?: '0 */1 * * * *'}")
+    public void syncBeacons() {
+        if (isJobEnabled("syncBeacons")) {
+            logJobExecution("syncBeacons", () -> {
+                logger.info("Starting beacon synchronization...");
+                beaconService.fetchAndSaveBeacons(authorization);
+                logger.info("Beacon synchronization completed.");
+            });
+        } else {
+            logger.info("syncBeacons job is disabled.");
+        }
+    }
+
+    @Scheduled(fixedRateString = "#{@cronJobConfigRepository.findByJobName('syncPositions')?.fixedRate ?: '2000'}")
+    public void syncPositions() {
+        if (isJobEnabled("syncPositions")) {
+            logJobExecution("syncPositions", () -> {
+                logger.info("Starting position synchronization...");
+                positionService.saveFetchedPositions(authorization);
+                logger.info("Position synchronization completed.");
+            });
+        } else {
+            logger.info("syncPositions job is disabled.");
+        }
+    }
+
+    private boolean isJobEnabled(String jobName) {
+        CronJobConfigEntity config = cronJobConfigRepository.findByJobName(jobName);
+        return config.isEnabled();
+    }
 
     private void logJobExecution(String jobName, Runnable job) {
         Instant startTime = Instant.now();
