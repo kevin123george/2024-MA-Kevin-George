@@ -20,16 +20,9 @@ import {
 } from "@/components/ui/select"
 
 // Component to render each card
-interface CronJob {
-  jobName: string;
-  cronExpression?: string;
-  fixedRate?: number | null;
-  enabled: boolean;
-}
-
-function CronJobCard({ job }: { job: CronJob }) {
+function CronJobCard({ job, onUpdateJob }) {
   return (
-    <Card className="w-full max-w[400px] mb-4">
+    <Card className="w-full max-w-[400px] mb-4">
       <CardHeader>
         <CardTitle>{job.jobName}</CardTitle>
         <CardDescription>
@@ -47,23 +40,26 @@ function CronJobCard({ job }: { job: CronJob }) {
               <Label htmlFor="cronExpression">Cron Expression</Label>
               <Input
                 id="cronExpression"
-                value={job.cronExpression || "N/A"}
+                value={job.cronExpression || ""}
+                onChange={(e) => onUpdateJob(job.jobName, "cronExpression", e.target.value)}
                 placeholder="Cron Expression"
-                readOnly
               />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="fixedRate">Fixed Rate (ms)</Label>
               <Input
                 id="fixedRate"
-                value={job.fixedRate !== null ? job.fixedRate : "N/A"}
+                value={job.fixedRate !== null ? job.fixedRate : ""}
+                onChange={(e) => onUpdateJob(job.jobName, "fixedRate", e.target.value)}
                 placeholder="Fixed Rate"
-                readOnly
               />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="enabled">Enabled</Label>
-              <Select defaultValue={job.enabled ? "true" : "false"}>
+              <Select
+                value={job.enabled ? "true" : "false"}
+                onValueChange={(value) => onUpdateJob(job.jobName, "enabled", value === "true")}
+              >
                 <SelectTrigger id="enabled">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
@@ -76,9 +72,6 @@ function CronJobCard({ job }: { job: CronJob }) {
           </div>
         </form>
       </CardContent>
-      <CardFooter className="flex justify-between">
-        <Button>Update</Button>
-      </CardFooter>
     </Card>
   )
 }
@@ -112,18 +105,63 @@ export function CardWithForm() {
     fetchCronJobs()
   }, [])
 
+  // Handle updating the value of an individual cron job field
+  const updateJobField = (jobName: string, field: string, value: any) => {
+    setCronJobs((prevJobs) =>
+      prevJobs.map((job) =>
+        job.jobName === jobName ? { ...job, [field]: value } : job
+      )
+    )
+  }
+
+  // Handle submitting all updates for the cron jobs
+  const updateAllCronJobs = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/cron/update`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(cronJobs), // Send the entire updated list
+      })
+      if (response.ok) {
+        console.log("All cron jobs updated successfully")
+      } else {
+        console.error("Failed to update cron jobs")
+      }
+    } catch (error) {
+      console.error("Error updating cron jobs:", error)
+    }
+  }
+
   if (loading) {
     return <div>Loading...</div>
   }
 
   return (
-    <div className="container mx-auto px-4"> 
+    <div className="container mx-auto px-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {cronJobs.length > 0 ? (
-          cronJobs.map((job) => <CronJobCard key={job.jobName} job={job} />)
+          cronJobs.map((job) => (
+            <CronJobCard
+              key={job.jobName}
+              job={job}
+              onUpdateJob={updateJobField} // Pass the field updater function
+            />
+          ))
         ) : (
           <div>No cron jobs found</div>
         )}
+      </div>
+      {/* Add a single update button at the bottom to update all jobs */}
+      <div >
+        <Button 
+        
+        variant='outline' 
+        onClick={updateAllCronJobs}
+
+        
+        >Update All</Button>
       </div>
     </div>
   )

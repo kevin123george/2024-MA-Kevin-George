@@ -48,21 +48,21 @@ export default function Settings() {
 }
 
 const sidebarNavItems = [
-  {
-    title: 'Profile',
-    icon: <IconUser size={18} />,
-    href: '/settings',
-  },
+  // {
+  //   title: 'Profile',
+  //   icon: <IconUser size={18} />,
+  //   href: '/settings',
+  // },
   {
     title: 'Account',
     icon: <IconTool size={18} />,
     href: '/settings/account',
   },
-  {
-    title: 'Appearance',
-    icon: <IconPalette size={18} />,
-    href: '/settings/appearance',
-  },
+  // {
+  //   title: 'Appearance',
+  //   icon: <IconPalette size={18} />,
+  //   href: '/settings/appearance',
+  // },
   {
     title: 'Notifications',
     icon: <IconNotification size={18} />,
@@ -74,7 +74,7 @@ const sidebarNavItems = [
     href: '/settings/display',
   },
   {
-    title: 'Error Example',
+    title: 'execptions',
     icon: <IconExclamationCircle size={18} />,
     href: '/settings/error-example',
   },
