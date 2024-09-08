@@ -73,8 +73,9 @@ public class DataSync {
 //        });
 //    }
 
-    @Scheduled(fixedRate = 600000) // Run every 5 minutes (300,000 ms)
-    public void syncPositions() {
+//    @Scheduled(fixedRate = 600000) // Run every 5 minutes (300,000 ms)
+        @Scheduled(fixedRate = 2000)
+        public void syncPositions() {
         logJobExecution("syncPosition", () -> {
             logger.info("Starting position synchronization...");
             positionService.saveFetchedPositions();

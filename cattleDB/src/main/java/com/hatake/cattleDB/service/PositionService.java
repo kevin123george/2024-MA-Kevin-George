@@ -21,8 +21,7 @@ public class PositionService {
     @Autowired
     private SafectoryClient safectoryClient;
 
-    private final String authorization = "Basic sdfffffffffffffff";
-
+    String authorization = "Basic a2V2aW4uZ2VvcmdlQHN0dWQudW5pLWJhbWJlcmcuZGU6QmxhY2tiaXJkMTIzIQ==";
     public List<PositionResponse> fetchPositions() {
         return safectoryClient.getPositions(authorization);
     }

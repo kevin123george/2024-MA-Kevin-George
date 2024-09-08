@@ -26,6 +26,7 @@ List<Map<String, Object>> findPositionsByDeviceId(@Param("deviceId") Long device
         p.latitude, p.longitude, 
         p.device_name AS deviceName, p.device_id AS deviceId
         FROM Position p
+        WHERE valid = true
         ORDER BY p.device_id, p.device_time DESC;
         """, nativeQuery = true)
     List<Map<String, Object>> getLatestPositions();
