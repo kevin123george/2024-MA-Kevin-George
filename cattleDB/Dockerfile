@@ -1,14 +1,15 @@
-# Use an official Tomcat image with Java 17
-FROM tomcat:10.1-jdk17-corretto
+# Dockerfile for Spring Boot Application using Gradle
+# Use an official OpenJDK image as a parent image
+FROM openjdk:17-jdk-alpine
 
-# Remove the default ROOT webapp from Tomcat
-RUN rm -rf /usr/local/tomcat/webapps/ROOT
+# Set the working directory inside the container
+WORKDIR /app
 
-# Copy the WAR file to the Tomcat webapps directory
-COPY build/libs/cattleDB-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
+# Copy the JAR file from the build/libs directory to the container
+COPY build/libs/cattleDB-0.0.1-SNAPSHOT.jar /app/cattleDB.jar
 
-# Expose the default Tomcat port
+# Expose port 8080
 EXPOSE 8080
 
-# Start Tomcat
-CMD ["catalina.sh", "run"]
+# Run the Spring Boot application
+ENTRYPOINT ["java", "-jar", "/app/cattleDB.jar"]

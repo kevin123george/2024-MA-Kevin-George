@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  spring-boot-app:
+    build:
+      context: ./cattleDB
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+    depends_on:
+      - vite-app
+
+  vite-app:
+    build:
+      context: ./cattle-admin
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
