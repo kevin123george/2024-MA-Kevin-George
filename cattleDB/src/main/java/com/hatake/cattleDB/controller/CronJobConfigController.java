@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cron")
-@CrossOrigin("http://localhost:5173/")
+//@CrossOrigin("http://localhost:5173/")
 public class CronJobConfigController {
 
     @Autowired

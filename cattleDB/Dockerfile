@@ -9,7 +9,7 @@ WORKDIR /app
 COPY build/libs/cattleDB-0.0.1-SNAPSHOT.jar /app/cattleDB.jar
 
 # Expose port 8080
-EXPOSE 8080
+EXPOSE 80
 
 # Run the Spring Boot application
 ENTRYPOINT ["java", "-jar", "/app/cattleDB.jar"]

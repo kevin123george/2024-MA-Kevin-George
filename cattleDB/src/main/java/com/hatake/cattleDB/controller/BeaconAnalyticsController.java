@@ -12,7 +12,7 @@ import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-@CrossOrigin("http://localhost:5173/")
+//@CrossOrigin("http://localhost:5173/")
 
 @RestController
 public class BeaconAnalyticsController {
