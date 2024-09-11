@@ -5,7 +5,7 @@ const nullableString = z.preprocess((val) => (val === null ? "" : val), z.string
 
 // Define the main schema, using nullableString where needed
 export const positionSchema = z.object({
-  id: z.number(),
+  id: z.string(),
   deviceid: z.number(),
   longitude: z.number(),
   protocol: nullableString,  // Convert null to empty string

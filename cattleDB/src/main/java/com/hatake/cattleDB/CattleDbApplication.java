@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @SpringBootApplication
 @EnableFeignClients
-@EnableScheduling // Enable Spring's scheduled task execution
+//@EnableScheduling // Enable Spring's scheduled task execution
 public class CattleDbApplication {
 	private static ConfigurableApplicationContext context;
 

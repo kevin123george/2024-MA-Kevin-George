@@ -34,7 +34,7 @@ export default function Devices() {
   useEffect(() => {
     async function fetchDevices() {
       try {
-        const response = await fetch('http://localhost:8080/api/devices')
+        const response = await fetch('http://backend:8080/api/devices')
         const data = await response.json()
         setDevices(data)
       } catch (error) {

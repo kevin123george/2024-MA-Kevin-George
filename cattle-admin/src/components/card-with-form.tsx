@@ -92,7 +92,7 @@ export function CardWithForm() {
   useEffect(() => {
     async function fetchCronJobs() {
       try {
-        const response = await fetch("http://localhost:8080/cron/configs")
+        const response = await fetch("http://backend:8080/cron/configs")
         const data = await response.json()
         setCronJobs(data) // Store the fetched data in state
         setLoading(false)
@@ -117,7 +117,7 @@ export function CardWithForm() {
   // Handle submitting all updates for the cron jobs
   const updateAllCronJobs = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/cron/update`, {
+      const response = await fetch(`http://backend:8080/cron/update`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

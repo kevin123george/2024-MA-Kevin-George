@@ -70,7 +70,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       rightSection,
       disabled,
       ...otherProps
-    } = props
+    } = props as { loading?: boolean; leftSection?: JSX.Element; rightSection?: JSX.Element; disabled?: boolean }
 
     return (
       <button

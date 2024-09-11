@@ -1,23 +1,21 @@
-version: "3.8"
-
 services:
-  spring-boot-app:
+  backend:
     build:
       context: ./cattleDB
-      dockerfile: Dockerfile
+      # dockerfile: Dockerfile-spring-boot
+    container_name: springboot-backend
     ports:
       - "8080:8080"
     networks:
       - app-network
-    depends_on:
-      - vite-app
 
-  vite-app:
+  frontend:
     build:
-      context: ./cattle-admin
-      dockerfile: Dockerfile
+      context: ./cattle-admin # Ensure this path exists
+      # dockerfile: Dockerfile-vite
+    container_name: vite-frontend
     ports:
-      - "5173:5173"
+      - "3000:80"
     networks:
       - app-network
 

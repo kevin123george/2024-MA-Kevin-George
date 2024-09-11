@@ -1,18 +1,29 @@
-# Dockerfile for Vite with Bun
-# Use the official Bun image
-FROM jarredsumner/bun:edge
+# Dockerfile for Vite App
+
+# Stage 1: Build the application
+FROM node:18-alpine AS build
 
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the package files and source code
+# Copy package.json and package-lock.json and install dependencies using npm
+COPY package*.json ./
+RUN npm install
+
+# Copy the rest of the application
 COPY . .
 
-# Install dependencies
-RUN bun install
+# Build the Vite app
+RUN npm run build
 
-# Expose port 5173
-EXPOSE 5173
+# Stage 2: Serve the application
+FROM nginx:alpine
 
-# Run the Vite development server
-CMD ["bun", "run", "dev", "--host"]
+# Copy the built files from the previous stage
+COPY --from=build /app/dist /usr/share/nginx/html
+
+# Expose port 80 to the outside
+EXPOSE 80
+
+# Start the nginx server
+CMD ["nginx", "-g", "daemon off;"]

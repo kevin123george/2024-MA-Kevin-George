@@ -1,16 +1,12 @@
-
-
-
-
+import { Task, taskSchema } from '@/pages/tasks/data/schema'
 import axios from 'axios'
 import { z } from 'zod'
-import { taskSchema, Task } from '../data/schema' // Import your schema
 
 // Function to fetch and validate data
 const fetchDataAndAssign = async () => {
   try {
     // Fetch data from the API
-    const response = await axios.get('http://localhost:8080/api/positions/177657227')
+    const response = await axios.get('http://backend:8080/api/positions/177657227')
 
     // Validate the data using Zod schema (assuming response is an array of tasks)
     const validatedData: Task[] = taskSchema.array().parse(response.data)

@@ -8,8 +8,8 @@ import axios from 'axios'
 import { z } from 'zod'
 import { positionSchema, Position } from './data/schema' // Adjust the import path based on your file structure
 import { fetchPositions } from '@/service/axios-calls'
-import App from './components/map-component-props'
-import MapComponent from './components/map-component-props'
+// import App from './components/map-component-props'
+// import MapComponent from './components/map-component-props'
 
 export default function Positions() {
   const [positions, setPositions] = useState<Position[]>([]) // State to hold tasks
