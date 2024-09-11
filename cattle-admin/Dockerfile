@@ -1,5 +1,3 @@
-# Dockerfile for Vite App
-
 # Stage 1: Build the application
 FROM node:18-alpine AS build
 
@@ -8,9 +6,10 @@ WORKDIR /app
 
 # Copy package.json and package-lock.json and install dependencies using npm
 COPY package*.json ./
+
 RUN npm install
 
-# Copy the rest of the application
+# Copy the rest of the application excluding node_modules (using .dockerignore)
 COPY . .
 
 # Build the Vite app
@@ -27,3 +26,4 @@ EXPOSE 80
 
 # Start the nginx server
 CMD ["nginx", "-g", "daemon off;"]
+

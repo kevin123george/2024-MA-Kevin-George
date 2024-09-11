@@ -1,6 +1,6 @@
 import axios from "axios"
 
-var defaultApi = "http://backend:8080/api";
+var defaultApi = "http://localhost:8080/api";
 
 
 export const fetchPositions = () => {

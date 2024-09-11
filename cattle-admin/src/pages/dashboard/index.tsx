@@ -24,7 +24,7 @@ export default function Dashboard() {
   useEffect(() => {
     async function fetchBeaconAnalytics() {
       try {
-        const response = await fetch('http://backend:8080/api/analytics/beacons')
+        const response = await fetch('http://localhost:8080/api/analytics/beacons')
         const data = await response.json()
         setBeaconAnalytics(data)
       } catch (error) {
@@ -37,7 +37,7 @@ export default function Dashboard() {
   useEffect(() => {
     async function fetchCronJobAnalytics() {
       try {
-        const response = await fetch('http://backend:8080/api/analytics/cron-jobs')
+        const response = await fetch('http://localhost:8080/api/analytics/cron-jobs')
         const data = await response.json()
         setCronJobAnalytics(data)
       } catch (error) {
@@ -50,7 +50,7 @@ export default function Dashboard() {
   useEffect(() => {
     async function fetchRouteAnalytics() {
       try {
-        const response = await fetch('http://backend:8080/api/analytics/routes')
+        const response = await fetch('http://localhost:8080/api/analytics/routes')
         const data = await response.json()
         setRouteAnalytics(data)
       } catch (error) {

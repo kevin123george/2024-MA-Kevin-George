@@ -2,7 +2,7 @@ services:
   backend:
     build:
       context: ./cattleDB
-      # dockerfile: Dockerfile-spring-boot
+      dockerfile: Dockerfile  # Ensure this Dockerfile exists
     container_name: springboot-backend
     ports:
       - "8080:8080"
@@ -11,8 +11,8 @@ services:
 
   frontend:
     build:
-      context: ./cattle-admin # Ensure this path exists
-      # dockerfile: Dockerfile-vite
+      context: ./cattle-admin
+      dockerfile: Dockerfile  # Ensure this Dockerfile exists
     container_name: vite-frontend
     ports:
       - "3000:80"
@@ -22,3 +22,4 @@ services:
 networks:
   app-network:
     driver: bridge
+
