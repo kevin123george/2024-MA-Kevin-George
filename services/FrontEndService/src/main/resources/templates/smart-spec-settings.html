@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{base}"
+      xmlns="http://www.w3.org/1999/html" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Settings</title>
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+    <!-- Add your Tailwind CSS reference -->
+    <!--    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.2/dist/tailwind.min.css" rel="stylesheet">-->
+
+    <!-- Include Litepicker CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet">
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container mx-auto p-6 space-y-8">
+        <h1 class="text-2xl font-bold">Settings</h1>
+        <p class="text-gray-600">Configure the simulator.</p>
+
+        <!-- Sensors and Spaces Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Sensors Section -->
+            <div class="bg-base-300 p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Sensors</h2>
+                <div class="form-control">
+                    <label class="label" for="sensors">
+                        <span class="label-text">Sensors Configuration</span>
+                    </label>
+                    <textarea class="textarea textarea-bordered h-48 w-full text-black font-bold" id="sensors"
+                              placeholder="Enter sensors configuration"></textarea>
+                </div>
+            </div>
+
+            <!-- Spaces Section -->
+            <div class="bg-base-300 p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Spaces</h2>
+                <div class="form-control">
+                    <label class="label" for="spaces">
+                        <span class="label-text">Spaces Configuration</span>
+                    </label>
+                    <textarea class="textarea textarea-bordered h-48 w-full text-black font-bold" id="spaces"
+                              placeholder="Enter spaces configuration"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metasensors and Learning Configuration Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Metasensors Section -->
+            <div class="bg-base-300 p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Metasensors</h2>
+                <div class="form-control">
+                    <label class="label" for="metasensors">
+                        <span class="label-text">Metasensors Configuration</span>
+                    </label>
+                    <textarea class="textarea textarea-bordered h-48 w-full text-black font-bold" id="metasensors"
+                              placeholder="Enter metasensors configuration"></textarea>
+                </div>
+            </div>
+
+            <!-- Scenario-Learning Configuration Section -->
+            <div class="bg-base-300 p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Scenario-Learning Configuration</h2>
+                <div class="form-control">
+                    <label class="label" for="learnConf">
+                        <span class="label-text">Learning Configuration</span>
+                    </label>
+                    <textarea class="textarea textarea-bordered h-48 w-full text-black font-bold" id="learnConf"
+                              placeholder="Enter learning configuration"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Generation Configuration Section -->
+        <div class="bg-base-300 p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4">Generation Configuration</h2>
+            <div class="form-control">
+                <label class="label" for="genConf">
+                    <span class="label-text">Generation Configuration</span>
+                </label>
+                <textarea class="textarea textarea-bordered h-48 w-full text-black font-bold" id="genConf"
+                          placeholder="Enter generation configuration"></textarea>
+            </div>
+        </div>
+
+        <!-- Update Button -->
+        <div class="flex justify-end">
+            <button class="btn"
+                    hx-headers='{"Content-Type": "application/json"}'
+                    hx-put="http://localhost:8080/api/configuration"
+                    hx-swap="outerHTML"
+                    hx-target="this"
+                    hx-trigger="click"
+                    hx-vals='{
+                        "sensors": document.getElementById("sensors").value,
+                        "spaces": document.getElementById("spaces").value,
+                        "metasensors": document.getElementById("metasensors").value,
+                        "learnConf": document.getElementById("learnConf").value,
+                        "genConf": document.getElementById("genConf").value}'>
+                Update Configuration
+            </button>
+        </div>
+
+        <br/>
+        <!-- Data Range Loader Section -->
+        <div class="bg-base-300 p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4">Load data for simulation</h2>
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Select Date Range</span>
+                </label>
+                <div class="flex flex-col md:flex-row md:space-x-4">
+                    <input class="input input-bordered w-full md:w-auto mb-4 md:mb-0" id="dateRangePicker" placeholder="Select date range"
+                           readonly type="text"/>
+                    <button class="btn" onclick="loadDataByDateRange()">Load Data</button>
+                </div>
+            </div>
+            <!-- Loading Indicator -->
+            <div id="loadingIndicator" style="display: none; text-align: center; margin-top: 20px;">
+                <span class="loading loading-ring loading-lg"></span>
+            </div>
+            <!-- Display Loaded Data -->
+            <div class="mt-6" id="dataDisplay">
+                <!-- Data will be displayed here -->
+            </div>
+        </div>
+
+        <!-- Load History Section -->
+        <div class="bg-base-300 p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4">Loaded Data History</h2>
+            <div class="overflow-x-auto">
+                <table class="table">
+                    <!-- head -->
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Rows Loaded</th>
+                        <th>Time Taken (ms)</th>
+                        <th>Status</th>
+                        <th>Load Timestamp</th>
+                    </tr>
+                    </thead>
+                    <tbody id="loadHistoryDisplay">
+                    <!-- Load history data will be dynamically added here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Litepicker JS -->
+    <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
+
+    <script>
+        // Fetch the configuration and populate the text areas
+        function populateConfiguration() {
+            fetch('http://localhost:8080/api/configuration')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('sensors').value = data.sensors || '';
+                    document.getElementById('spaces').value = data.spaces || '';
+                    document.getElementById('metasensors').value = data.metasensors || '';
+                    document.getElementById('learnConf').value = data.learnConf || '';
+                    document.getElementById('genConf').value = data.genConf || '';
+                })
+                .catch(error => console.error('Error fetching configuration:', error));
+        }
+
+        // Populate on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            populateConfiguration();
+
+            // Initialize Litepicker
+            const picker = new Litepicker({
+                element: document.getElementById('dateRangePicker'),
+                singleMode: false,
+                format: 'YYYY-MM-DD',
+                numberOfMonths: 2,
+                numberOfColumns: 2,
+                autoApply: true,
+                tooltipText: {
+                    one: 'day',
+                    other: 'days'
+                },
+                tooltipNumber: (totalDays) => {
+                    return totalDays - 1;
+                },
+            });
+
+            // Load the data load history on page load
+            loadHistory();
+        });
+
+        function loadDataByDateRange() {
+            const dateRange = document.getElementById('dateRangePicker').value;
+            const [startDate, endDate] = dateRange.split(' - ');
+
+            if (!startDate || !endDate) {
+                alert('Please select a date range.');
+                return;
+            }
+
+            // Show loading indicator
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            loadingIndicator.style.display = 'block';
+            const dataDisplay = document.getElementById('dataDisplay');
+            dataDisplay.innerHTML = ''; // Clear previous data
+
+            // Fetch data from your API with the date range
+            fetch(`http://localhost:9094/mysql/tables/init-measure?startDate=${startDate}&endDate=${endDate}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Hide loading indicator
+                    loadingIndicator.style.display = 'none';
+                    displayData(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    dataDisplay.innerHTML = 'Error fetching data. Please try again later.';
+                    // Hide loading indicator
+                    loadingIndicator.style.display = 'none';
+                });
+        }
+
+        // Function to display the fetched data
+        function displayData(data) {
+            const dataDisplay = document.getElementById('dataDisplay');
+            dataDisplay.innerHTML = ''; // Clear previous data
+
+            if (data.length === 0) {
+                dataDisplay.textContent = 'No data found for the selected date range.';
+                return;
+            }
+
+            // Display the number of rows loaded
+            dataDisplay.textContent = `${data.length} rows loaded for simulation.`;
+        }
+
+        // Fetch load history data from API
+        function loadHistory() {
+            fetch('http://localhost:9094/mysql/tables/load-history')
+                .then(response => response.json())
+                .then(data => {
+                    const loadHistoryDisplay = document.getElementById('loadHistoryDisplay');
+                    loadHistoryDisplay.innerHTML = ''; // Clear previous data
+
+                    if (data.length === 0) {
+                        loadHistoryDisplay.textContent = 'No load history found.';
+                        return;
+                    }
+
+                    // Reverse the data order to display the latest entries first
+                    data.reverse();
+
+                    // Append rows dynamically
+                    data.forEach((row, index) => {
+                        const rowElement = document.createElement('tr');
+                        // Apply highlight class to the latest row (the first row in reversed order)
+                        if (index === 0) {
+                            rowElement.classList.add('bg-base-200');  // Highlighting the latest row
+                        }
+                        rowElement.innerHTML = `
+                            <th>${index + 1}</th>
+                            <td>${new Date(row.startDate).toLocaleString()}</td>
+                            <td>${new Date(row.endDate).toLocaleString()}</td>
+                            <td>${row.rowsLoaded}</td>
+                            <td>${row.timeTakenMs}</td>
+                            <td>${row.status}</td>
+                            <td>${new Date(row.loadTimestamp).toLocaleString()}</td>
+                        `;
+                        loadHistoryDisplay.appendChild(rowElement);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching load history:', error);
+                    document.getElementById('loadHistoryDisplay').textContent = 'Error fetching load history.';
+                });
+        }
+    </script>
+</div>
+</body>
+</html>

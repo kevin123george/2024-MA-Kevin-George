@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Log Streaming</title>
+    <script>
+        // JavaScript to handle SSE for log streaming
+        function startLogStream() {
+            var eventSource = new EventSource('/log-streaming'); // The controller will handle this URL
+
+            // Array to hold the last 50 log lines
+            var logs = [];
+
+            eventSource.onmessage = function(event) {
+                var logLine = event.data;
+
+                // Add new log line to the array
+                logs.push(logLine);
+
+                // Keep only the last 50 lines
+                if (logs.length > 50) {
+                    logs.shift(); // Remove the first (oldest) line if more than 50 lines
+                }
+
+                // Update the displayed logs
+                var logContainer = document.getElementById('logs');
+                logContainer.innerHTML = ''; // Clear the container before updating
+
+                // Display the last 50 log lines
+                logs.forEach(function(log) {
+                    var logItem = document.createElement('div');
+                    logItem.textContent = log;
+                    logContainer.appendChild(logItem);
+                });
+            };
+
+            eventSource.onerror = function(error) {
+                console.error("Error in log streaming", error);
+                eventSource.close();
+            };
+        }
+
+        window.onload = startLogStream; // Start the stream when the page loads
+    </script>
+</head>
+<body>
+<h1>Streaming Logs</h1>
+<div id="logs"></div>
+</body>
+</html>

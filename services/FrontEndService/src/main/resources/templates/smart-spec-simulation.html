@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Cattle Movement Simulation</title>
+    <link href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" rel="stylesheet"/>
+    <style>
+        html, body, .container {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+
+        .map-container {
+            flex-grow: 1;
+            position: relative;
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+
+        #clock, .controls {
+            position: absolute;
+            z-index: 1000;
+            background: white;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        #clock {
+            top: 10px;
+            right: 10px;
+        }
+
+        .controls {
+            top: 10px;
+            left: 10px;
+        }
+
+        .btn {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Cattle Movement Simulation</h1>
+    </div>
+    <div class="map-container">
+        <div id="map"></div>
+        <div id="clock">
+            <span id="current-time">00:00</span>
+        </div>
+        <div class="controls">
+            <button class="btn" id="play-btn">Play</button>
+            <button class="btn" id="speed-up-btn">Speed Up</button>
+            <button class="btn" id="slow-down-btn">Slow Down</button>
+            <button class="btn" id="clear-btn">Clear</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const baseURL = 'http://localhost:8080/api';
+        const startTime = 1650931331;
+        const endTime = 1650931451;
+        const url = `${baseURL}/locations?start=${startTime}&end=${endTime}`;
+
+        let map, cattleMarkers = {}, timeIndex = 0;
+        let playing = false;
+        let speed = 1;
+        let simulationData = [];
+
+        function initializeMap() {
+            map = L.map('map').setView([0, 0], 2); // Start with a world view
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+        }
+
+        async function fetchCattleLocations() {
+            try {
+                const response = await fetch(url);
+                simulationData = await response.json();
+                console.log("Raw cattle data:", simulationData);
+                if (simulationData.length > 0) {
+                    focusMapOnFirstPosition();
+                    updateMarkers();
+                } else {
+                    console.error('No cattle data found');
+                }
+            } catch (error) {
+                console.error('Error fetching cattle locations:', error);
+            }
+        }
+
+        function focusMapOnFirstPosition() {
+            if (simulationData.length > 0) {
+                const firstPosition = simulationData[0];
+                map.setView([firstPosition.latitude, firstPosition.longitude], 15);
+                console.log(`Centering map on: ${firstPosition.latitude}, ${firstPosition.longitude}`);
+            } else {
+                console.error("No valid coordinates found to center the map.");
+            }
+        }
+
+        function updateMarkers() {
+            if (timeIndex >= simulationData.length) {
+                playing = false;
+                document.getElementById('play-btn').textContent = "Play";
+                return;
+            }
+
+            const currentData = simulationData[timeIndex];
+            document.getElementById('current-time').textContent = new Date(currentData.startTime).toLocaleString();
+
+            if (cattleMarkers[currentData.cattleID]) {
+                cattleMarkers[currentData.cattleID].setLatLng([currentData.latitude, currentData.longitude]);
+            } else {
+                cattleMarkers[currentData.cattleID] = L.marker([currentData.latitude, currentData.longitude])
+                    .addTo(map)
+                    .bindPopup(`Cattle ID: ${currentData.cattleID}`);
+                console.log(`Created marker for cattle ${currentData.cattleID} at ${currentData.latitude}, ${currentData.longitude}`);
+            }
+
+            if (playing) {
+                timeIndex += speed;
+                setTimeout(updateMarkers, 1000);
+            }
+        }
+
+        document.getElementById('play-btn').addEventListener('click', function () {
+            playing = !playing;
+            this.textContent = playing ? "Pause" : "Play";
+            if (playing) updateMarkers();
+        });
+
+        document.getElementById('speed-up-btn').addEventListener('click', () => speed = Math.min(10, speed + 1));
+        document.getElementById('slow-down-btn').addEventListener('click', () => speed = Math.max(1, speed - 1));
+
+        document.getElementById('clear-btn').addEventListener('click', function () {
+            Object.values(cattleMarkers).forEach(marker => map.removeLayer(marker));
+            cattleMarkers = {};
+            timeIndex = 0;
+            playing = false;
+            document.getElementById('play-btn').textContent = "Play";
+        });
+
+        initializeMap();
+        fetchCattleLocations();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!doctype html>
+<html data-theme="retro" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Cattle Movement Dashboard</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <link href="/css/output.css" rel="stylesheet"/>
+
+    <!-- Leaflet CSS -->
+    <link href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" rel="stylesheet"/>
+
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+
+        .map-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        #loading-indicator {
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body class="drawer min-h-screen bg-base-200 lg:drawer-open">
+<input class="drawer-toggle" id="my-drawer" type="checkbox"/>
+
+<main class="drawer-content p-4">
+    <section layout:fragment="content">
+        <div class="card w-full bg-base-100 shadow-xl">
+            <div class="card-body">
+                <h2 class="card-title">Cattle Movement Simulation</h2>
+
+                <div class="map-controls">
+                    <button id="play-btn" class="btn btn-primary">Play</button>
+                    <button id="speed-up-btn" class="btn btn-secondary">Speed Up</button>
+                    <button id="slow-down-btn" class="btn btn-secondary">Slow Down</button>
+                    <button id="clear-btn" class="btn btn-accent">Clear</button>
+                    <div class="ml-auto">
+                        <span>Current Time: </span>
+                        <span id="current-time" class="font-bold">00:00</span>
+                    </div>
+                </div>
+
+                <div id="map" class="rounded-lg"></div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<aside class="drawer-side z-10">
+    <label class="drawer-overlay" for="my-drawer"></label>
+</aside>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const baseURL = 'http://localhost:8080/api';
+        const url = `${baseURL}/locations?start=1577836800&end=1893456000`;
+
+        let map, cattleMarkers = {}, timeIndex = 0;
+        let playing = false;
+        let speed = 1;
+        let simulationData = [];
+
+        function initializeMap() {
+            // Initialize the map with max zoom support
+            map = L.map('map', {
+                maxZoom: 22 // Support zoom levels up to 22
+            }).setView([49.0134, 12.1016], 19); // Replace with desired coordinates and zoom level
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 22 // Tile layer maximum zoom level
+            }).addTo(map);
+        }
+
+        async function fetchCattleLocations() {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                simulationData = await response.json();
+                if (simulationData.length > 0) {
+                    focusMapOnFirstPosition();
+                    updateMarkers();
+                } else {
+                    document.getElementById('map').innerHTML = '<div class="alert alert-warning">No cattle data found</div>';
+                }
+            } catch (error) {
+                document.getElementById('map').innerHTML = `
+                    <div class="alert alert-error">
+                        <span>Error: ${error.message}. Check API connection.</span>
+                    </div>`;
+            }
+        }
+
+        function focusMapOnFirstPosition() {
+            if (simulationData.length > 0) {
+                const firstPosition = simulationData[0];
+                map.setView([firstPosition.latitude, firstPosition.longitude], 20); // Zoom to a high level
+            }
+        }
+
+        function updateMarkers() {
+            if (timeIndex >= simulationData.length) {
+                playing = false;
+                document.getElementById('play-btn').textContent = "Play";
+                return;
+            }
+
+            const currentData = simulationData[timeIndex];
+            document.getElementById('current-time').textContent = new Date(currentData.startTime * 1000).toLocaleString();
+
+            if (cattleMarkers[currentData.cattleID]) {
+                cattleMarkers[currentData.cattleID].setLatLng([currentData.latitude, currentData.longitude]);
+            } else {
+                cattleMarkers[currentData.cattleID] = L.marker([currentData.latitude, currentData.longitude])
+                    .addTo(map)
+                    .bindPopup(`Cattle ID: ${currentData.cattleID}`);
+            }
+
+            if (playing) {
+                timeIndex += speed;
+                setTimeout(updateMarkers, 1000);
+            }
+        }
+
+        // Event Listeners
+        document.getElementById('play-btn').addEventListener('click', function () {
+            playing = !playing;
+            this.textContent = playing ? "Pause" : "Play";
+            if (playing) updateMarkers();
+        });
+
+        document.getElementById('speed-up-btn').addEventListener('click', () => {
+            speed = Math.min(10, speed + 1);
+        });
+
+        document.getElementById('slow-down-btn').addEventListener('click', () => {
+            speed = Math.max(1, speed - 1);
+        });
+
+        document.getElementById('clear-btn').addEventListener('click', function () {
+            Object.values(cattleMarkers).forEach(marker => map.removeLayer(marker));
+            cattleMarkers = {};
+            timeIndex = 0;
+            playing = false;
+            document.getElementById('play-btn').textContent = "Play";
+            document.getElementById('current-time').textContent = "00:00";
+        });
+
+        // Initialize map and fetch data
+        initializeMap();
+        fetchCattleLocations();
+    });
+</script>
+</body>
+</html>

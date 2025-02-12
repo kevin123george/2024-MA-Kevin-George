@@ -1,0 +1,87 @@
+-- -- liquibase formatted sql
+--
+-- --changeset author:initial-schema:1
+-- --comment: Initial schema creation
+--
+-- -- Enable vector extension
+-- CREATE EXTENSION IF NOT EXISTS vector;
+--
+-- -- First, let's add the embedding column to the position table
+-- -- Note: 1536 is a common embedding dimension, adjust if using a different model
+-- ALTER TABLE position
+--     ADD COLUMN IF NOT EXISTS embedding vector(1536);
+--
+-- -- Add a column to store the text representation that was used for embedding
+-- ALTER TABLE position
+--     ADD COLUMN IF NOT EXISTS embedding_text TEXT;
+--
+-- -- Add index for vector similarity search
+-- CREATE INDEX IF NOT EXISTS position_embedding_idx ON position
+--     USING ivfflat (embedding vector_cosine_ops)
+--     WITH (lists = 100);
+--
+-- -- Optional: Add a function for cosine similarity if you need it
+-- CREATE OR REPLACE FUNCTION cosine_similarity(a vector, b vector)
+--     RETURNS float
+-- AS $$
+-- SELECT 1 - (a <=> b);
+-- $$ LANGUAGE SQL IMMUTABLE STRICT;
+--
+-- -- Optional: Add a function to find similar positions
+-- CREATE OR REPLACE FUNCTION find_similar_positions(
+--     query_embedding vector,
+--     similarity_threshold float,
+--     max_results integer
+-- )
+--     RETURNS TABLE (
+--                       id bigint,
+--                       device_name text,
+--                       latitude double precision,
+--                       longitude double precision,
+--                       similarity float
+--                   )
+--     LANGUAGE SQL
+-- AS $$
+-- SELECT
+--     p.id,
+--     p.device_name,
+--     p.latitude,
+--     p.longitude,
+--     1 - (p.embedding <=> query_embedding) as similarity
+-- FROM position p
+-- WHERE 1 - (p.embedding <=> query_embedding) > similarity_threshold
+-- ORDER BY p.embedding <=> query_embedding
+-- LIMIT max_results;
+-- $$;
+--
+-- -- If you need to migrate existing data, you can update old records with null embeddings:
+-- -- UPDATE position
+-- -- SET embedding = NULL,
+-- --     embedding_text = NULL
+-- -- WHERE embedding IS NULL;
+--
+-- -- Optional: Create a view for positions with embeddings
+-- CREATE OR REPLACE VIEW position_embeddings AS
+-- SELECT
+--     id,
+--     device_name,
+--     latitude,
+--     longitude,
+--     device_time,
+--     embedding,
+--     embedding_text
+-- FROM position
+-- WHERE embedding IS NOT NULL;
+--
+-- -- Optional: Add some helper functions for vector operations
+-- CREATE OR REPLACE FUNCTION l2_distance(a vector, b vector)
+--     RETURNS float
+-- AS $$
+-- SELECT sqrt(a <-> b);
+-- $$ LANGUAGE SQL IMMUTABLE STRICT;
+--
+-- CREATE OR REPLACE FUNCTION dot_product(a vector, b vector)
+--     RETURNS float
+-- AS $$
+-- SELECT a <#> b;
+-- $$ LANGUAGE SQL IMMUTABLE STRICT;

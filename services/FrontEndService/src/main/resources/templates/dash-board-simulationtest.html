@@ -1,0 +1,281 @@
+<!doctype html>
+<html data-theme="retro" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Cattle Movement Dashboard</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <link href="/css/output.css" rel="stylesheet"/>
+
+    <!-- Leaflet CSS -->
+    <link href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .dashboard-container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .table-container {
+            width: 40%;
+            overflow-y: auto;
+            padding: 20px;
+            background-color: hsl(var(--b2));
+        }
+
+        .map-container {
+            width: 60%;
+            position: relative;
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+
+        .map-controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            justify-content: flex-end;
+        }
+
+        @keyframes highlight-flash {
+            0% { background-color: transparent; }
+            50% { background-color: rgba(76, 175, 80, 0.3); }
+            100% { background-color: transparent; }
+        }
+
+        .row-highlight {
+            animation: highlight-flash 1.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard-container">
+    <div class="table-container">
+        <div class="card bg-base-300 rounded-box grid h-20 place-items-centerl">
+            <div class="card-body">
+                <h2 class="card-title">Cattle Movement Simulation</h2>
+                <div class="mb-4">
+                    <span>Current Time: </span>
+                    <span id="current-time" class="font-bold">00:00</span>
+                </div>
+                <table class="table w-full">
+                    <thead>
+                    <tr>
+                        <th>Cattle ID</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                        <th>Last Updated</th>
+                    </tr>
+                    </thead>
+                    <tbody id="cattle-table-body">
+                    <!-- Dynamic rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="card bg-base-300 rounded-box grid h-20 place-items-centerl">
+            <div class="card-body">
+
+            </div>
+        </div>
+
+    </div>
+    <div class="map-container">
+        <div class="map-controls">
+            <button id="play-btn" class="btn btn-primary btn-sm">Play</button>
+            <button id="speed-up-btn" class="btn btn-secondary btn-sm">Speed Up</button>
+            <button id="slow-down-btn" class="btn btn-secondary btn-sm">Slow Down</button>
+            <button id="clear-btn" class="btn btn-accent btn-sm">Clear</button>
+        </div>
+        <div id="map"></div>
+    </div>
+</div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const url = `http://localhost:9094/mysql/cattle-positions-asc`;
+
+        let map, cattleMarkers = {}, cattlePaths = {}, timeIndex = 0;
+        let playing = false;
+        let speed = 1;
+        let simulationData = [];
+        const markersCluster = L.markerClusterGroup();
+
+        // Color generation function
+        function generateColorForId(id) {
+            // Use a more sophisticated color generation approach
+            const colors = [
+                '#FF6B6B', '#FFD166', '#06D6A0', '#118AB2', '#073B4C',
+                '#F072B6', '#8AC926', '#5F5587', '#EE6C4D', '#00B4D8'
+            ];
+            return colors[Math.abs(hashCode(id)) % colors.length];
+        }
+
+        // Simple hash function
+        function hashCode(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                hash = str.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            return hash;
+        }
+
+        // Custom icon creator
+        function createColoredIcon(cattleID) {
+            const color = generateColorForId(cattleID);
+            return L.divIcon({
+                className: 'custom-marker',
+                html: `<div style="background-color: ${color}; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 5px rgba(0,0,0,0.5);"></div>`,
+                iconSize: [20, 20],
+                iconAnchor: [10, 10]
+            });
+        }
+
+        function initializeMap() {
+            // Initialize the map
+            map = L.map('map', { maxZoom: 22 }).setView([49.0134, 12.1016], 19);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 22
+            }).addTo(map);
+        }
+
+        async function fetchCattleLocations() {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                simulationData = await response.json();
+                if (simulationData.length > 0) {
+                    focusMapOnFirstPosition();
+                    updateMarkers();
+                } else {
+                    document.getElementById('map').innerHTML = '<div class="alert alert-warning">No cattle data found</div>';
+                }
+            } catch (error) {
+                document.getElementById('map').innerHTML = `
+                    <div class="alert alert-error">
+                        <span>Error: ${error.message}. Check API connection.</span>
+                    </div>`;
+            }
+        }
+
+        function focusMapOnFirstPosition() {
+            if (simulationData.length > 0) {
+                const firstPosition = simulationData[0];
+                map.setView([firstPosition.latitude, firstPosition.longitude], 20);
+            }
+        }
+
+        function updateMarkers() {
+            if (timeIndex >= simulationData.length) {
+                playing = false;
+                document.getElementById('play-btn').textContent = "Play";
+                return;
+            }
+
+            const currentData = simulationData[timeIndex];
+            const { cattleID, latitude, longitude, startTime } = currentData;
+
+            document.getElementById('current-time').textContent = startTime;
+
+            if (!cattlePaths[cattleID]) cattlePaths[cattleID] = [];
+            cattlePaths[cattleID].push([latitude, longitude]);
+
+            if (cattleMarkers[cattleID]) {
+                cattleMarkers[cattleID].setLatLng([latitude, longitude]);
+            } else {
+                // Use custom icon with color based on cattle ID
+                cattleMarkers[cattleID] = L.marker([latitude, longitude], {
+                    icon: createColoredIcon(cattleID)
+                })
+                .addTo(map)
+                .bindPopup(`Cattle ID: ${cattleID}`);
+                markersCluster.addLayer(cattleMarkers[cattleID]);
+            }
+
+            const path = cattlePaths[cattleID];
+            if (path.length > 1) {
+                // Use a color consistent with the marker
+                const color = generateColorForId(cattleID);
+                L.polyline(path, { color: color, weight: 3 }).addTo(map);
+            }
+
+            const tableBody = document.getElementById('cattle-table-body');
+            let row = document.querySelector(`#row-${cattleID}`);
+
+            if (!row) {
+                row = document.createElement('tr');
+                row.id = `row-${cattleID}`;
+                row.innerHTML = `
+                    <td>
+                        <div style="display: flex; align-items: center;">
+                            <div style="width: 15px; height: 15px; border-radius: 50%; background-color: ${generateColorForId(cattleID)}; margin-right: 10px;"></div>
+                            ${cattleID}
+                        </div>
+                    </td>
+                    <td class="latitude">${latitude.toFixed(6)}</td>
+                    <td class="longitude">${longitude.toFixed(6)}</td>
+                    <td class="last-updated">${startTime}</td>
+                `;
+                row.classList.add('row-highlight');
+                tableBody.appendChild(row);
+            } else {
+                row.classList.add('row-highlight');
+                row.querySelector('.latitude').textContent = latitude.toFixed(6);
+                row.querySelector('.longitude').textContent = longitude.toFixed(6);
+                row.querySelector('.last-updated').textContent = startTime;
+                setTimeout(() => row.classList.remove('row-highlight'), 1500);
+            }
+
+            if (playing) {
+                timeIndex += speed;
+                setTimeout(updateMarkers, 1000);
+            }
+        }
+
+        document.getElementById('play-btn').addEventListener('click', function () {
+            playing = !playing;
+            this.textContent = playing ? "Pause" : "Play";
+            if (playing) updateMarkers();
+        });
+
+        document.getElementById('speed-up-btn').addEventListener('click', () => { speed = Math.min(10, speed + 1); });
+        document.getElementById('slow-down-btn').addEventListener('click', () => { speed = Math.max(1, speed - 1); });
+        document.getElementById('clear-btn').addEventListener('click', function () {
+            markersCluster.clearLayers();
+            cattleMarkers = {};
+            cattlePaths = {};
+            timeIndex = 0;
+            playing = false;
+            document.getElementById('play-btn').textContent = "Play";
+            document.getElementById('current-time').textContent = "00:00";
+            document.getElementById('cattle-table-body').innerHTML = "";
+        });
+
+        initializeMap();
+        map.addLayer(markersCluster);
+        fetchCattleLocations();
+    });
+</script>
+</body>
+</html>

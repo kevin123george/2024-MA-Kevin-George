@@ -1,0 +1,259 @@
+
+    @PostMapping("/compute/all/test2/csv")
+    public ResponseEntity<?> tes2(@RequestParam(defaultValue = "5") int minutes) {
+        logger.info("Starting trilateration process for all devices within the last {} minutes", minutes);
+
+        // Map to store the latest timestamp for each device
+        Map<Long, OffsetDateTime> latestTimesMap = new HashMap<>();
+
+        // Read positions from JSON file
+        String jsonFilePath = "C:\\Users\\hikev\\Desktop\\thesis\\2024-MA-Kevin-George\\services\\LocationSimulationService\\data.json";
+        List<PositionSanitized> positionsSubset = new ArrayList<>();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule()); // Register Java 8 Date/Time module
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);  // Ignore unknown fields
+
+        try {
+            positionsSubset = objectMapper.readValue(
+                    new File(jsonFilePath),
+                    objectMapper.getTypeFactory().constructCollectionType(List.class, PositionSanitized.class)
+            );
+            logger.info("Successfully read {} positions from JSON file.", positionsSubset.size());
+        } catch (IOException e) {
+            logger.error("Error reading JSON file: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error reading JSON file.");
+        }
+
+        if (positionsSubset.isEmpty()) {
+            logger.warn("No positions found in the JSON file.");
+            return ResponseEntity.ok("No recent detections found.");
+        }
+
+        // Determine the latest timestamp for each deviceId
+        for (PositionSanitized pos : positionsSubset) {
+            Long deviceId = pos.getDeviceId();
+            OffsetDateTime currentTime = pos.getDeviceTime();
+            latestTimesMap.merge(deviceId, currentTime, (existingTime, newTime) -> existingTime.isAfter(newTime) ? existingTime : newTime);
+        }
+
+        if (latestTimesMap.isEmpty()) {
+            logger.warn("No recent timestamps found for any device.");
+            return ResponseEntity.ok("No recent detections found.");
+        }
+
+        // Compute reference latitude and longitude using beacon data
+        logger.info("Computing reference latitude and longitude using beacon data...");
+        List<BeaconEntity> allBeacons = beaconRepository.findAll();
+        double sumLat = 0.0, sumLon = 0.0;
+        int count = 0;
+
+        for (BeaconEntity b : allBeacons) {
+            if (b.getLatitude() != null && b.getLongitude() != null) {
+                sumLat += b.getLatitude();
+                sumLon += b.getLongitude();
+                count++;
+            }
+        }
+
+        if (count == 0) {
+            logger.error("No valid beacon lat/lons found in the database.");
+            return ResponseEntity.badRequest().body("No valid beacon lat/lons found.");
+        }
+
+        double refLat = sumLat / count;
+        double refLon = sumLon / count;
+        logger.info("Reference position set to Lat: {}, Lon: {}", refLat, refLon);
+
+        // Perform localization for each device
+        List<Map<String, Object>> devicesResults = new ArrayList<>();
+        Map<Long, Map<String, Object>> uniqueBeaconsMap = new HashMap<>();
+
+        for (Map.Entry<Long, OffsetDateTime> entry : latestTimesMap.entrySet()) {
+            Long deviceId = entry.getKey();
+//            OffsetDateTime latestTimeForDevice = entry.getValue();
+//            OffsetDateTime windowStart = latestTimeForDevice.minusMinutes(minutes);
+            OffsetDateTime latestTimeForDevice = OffsetDateTime.of(
+                    2022, 4, 26, 13, 6, 33, 0, ZoneOffset.UTC
+            );
+            OffsetDateTime windowStart = latestTimeForDevice.minusMinutes(minutes);
+
+            int x = 30; // Time window in minutes
+            List<PositionSanitized> recentDetections = positionsSubset.stream()
+                    .filter(pos -> pos.getDeviceId().equals(deviceId) &&
+                            (pos.getDeviceTime().isAfter(windowStart) || pos.getDeviceTime().isEqual(windowStart)) &&
+                            (pos.getDeviceTime().isBefore(windowStart.plusMinutes(x)) || pos.getDeviceTime().isEqual(windowStart.plusMinutes(x))) &&
+                            pos.getRssi() > -75
+//                            && // Filter out weak RSSI signals
+//                            parseDouble(pos.getAttributes().get("scanRssi"), -100) > -85 // Filter out weak scanRSSI signals
+                    )
+                    .sorted(Comparator.comparing(PositionSanitized::getDeviceTime, Comparator.reverseOrder()) // Sort by deviceTime descending
+                            .thenComparing(pos -> Math.abs(pos.getRssi()), Comparator.reverseOrder()) // Sort by RSSI descending
+                    )
+                    .collect(Collectors.toList());
+
+            if (recentDetections.isEmpty()) {
+                continue;
+            }
+
+            String deviceName = recentDetections.get(0).getDeviceName();
+            List<double[]> beaconXY = new ArrayList<>();
+            List<Double> distances = new ArrayList<>();
+            List<Map<String, Object>> detectionsInfo = new ArrayList<>();
+
+            // Add physical beacons
+            for (PositionSanitized pos : recentDetections) {
+                if (pos.getBeaconId() == null) {
+                    continue;
+                }
+
+                BeaconEntity beacon = beaconRepository.findByName(pos.getBeaconName()).orElse(null);
+                if (beacon == null || beacon.getLatitude() == null || beacon.getLongitude() == null) {
+                    continue;
+                }
+
+                double[] xy = TrilaterationService.latlonToXY(beacon.getLatitude(), beacon.getLongitude(), refLat, refLon);
+                int rssiValue = (pos.getRssi() == null) ? -100 : 128 - pos.getRssi();
+                double d = TrilaterationService.rssiToDistance(rssiValue);
+
+                beaconXY.add(xy);
+                distances.add(d);
+
+                Map<String, Object> detectionDetail = new HashMap<>();
+                detectionDetail.put("beaconId", beacon.getId());
+                detectionDetail.put("beaconName", beacon.getName());
+                detectionDetail.put("beaconLatitude", beacon.getLatitude());
+                detectionDetail.put("beaconLongitude", beacon.getLongitude());
+                detectionDetail.put("rssi", rssiValue);
+                detectionDetail.put("scanRssi", pos.getAttributes().get("scanRssi"));
+                detectionDetail.put("deviceTime", pos.getDeviceTime());
+                detectionsInfo.add(detectionDetail);
+
+                uniqueBeaconsMap.putIfAbsent(beacon.getId(), detectionDetail);
+            }
+
+            // Add virtual beacons (other devices)
+            for (PositionSanitized pos : recentDetections) {
+                if (pos.getDeviceId().equals(deviceId)) {
+                    continue; // Skip the current device
+                }
+
+                // Check if the device has a valid position estimate
+//                if (pos.getLatitude() != null && pos.getLongitude() != null) {
+                    double[] xy = TrilaterationService.latlonToXY(pos.getLatitude(), pos.getLongitude(), refLat, refLon);
+                    int rssiValue = (pos.getRssi() == null) ? -100 : 128 - pos.getRssi();
+                    double d = TrilaterationService.rssiToDistance(rssiValue);
+
+                    beaconXY.add(xy);
+                    distances.add(d);
+
+                    Map<String, Object> detectionDetail = new HashMap<>();
+                    detectionDetail.put("deviceId", pos.getDeviceId());
+                    detectionDetail.put("deviceName", pos.getDeviceName());
+                    detectionDetail.put("latitude", pos.getLatitude());
+                    detectionDetail.put("longitude", pos.getLongitude());
+                    detectionDetail.put("rssi", rssiValue);
+                    detectionDetail.put("scanRssi", pos.getAttributes().get("scanRssi"));
+                    detectionDetail.put("deviceTime", pos.getDeviceTime());
+                    detectionsInfo.add(detectionDetail);
+//                }
+            }
+
+            // Perform trilateration
+            Map<String, Object> deviceResult = new HashMap<>();
+            deviceResult.put("deviceId", deviceId);
+            deviceResult.put("deviceName", deviceName);
+            deviceResult.put("latestTimeForDevice", latestTimeForDevice.toString());
+            deviceResult.put("participatingDetections", detectionsInfo);
+
+            if (!beaconXY.isEmpty()) {
+                try {
+                    double[] finalXY = TrilaterationService.solvePosition(beaconXY, distances);
+                    double[] finalLatLon = TrilaterationService.xyToLatlon(finalXY[0], finalXY[1], refLat, refLon);
+
+                    // Find the closest beacon (physical or virtual)
+                    BeaconEntity closestBeacon = findClosestBeacon(finalLatLon[0], finalLatLon[1], allBeacons);
+                    if (closestBeacon != null) {
+                        Map<String, Object> closestBeaconInfo = new HashMap<>();
+                        closestBeaconInfo.put("beaconId", closestBeacon.getId());
+                        closestBeaconInfo.put("beaconName", closestBeacon.getName());
+                        closestBeaconInfo.put("beaconLatitude", closestBeacon.getLatitude());
+                        closestBeaconInfo.put("beaconLongitude", closestBeacon.getLongitude());
+                        deviceResult.put("closestBeacon", closestBeaconInfo);
+                    }
+
+                    deviceResult.put("latitude", finalLatLon[0]);
+                    deviceResult.put("longitude", finalLatLon[1]);
+                    deviceResult.put("message", "Estimated location computed via trilateration.");
+                } catch (Exception e) {
+                    logger.error("Trilateration failed for device {}.", deviceId);
+                    double[] fallbackPosition = fallbackWeightedAverage(recentDetections);
+                    deviceResult.put("latitude", fallbackPosition[0]);
+                    deviceResult.put("longitude", fallbackPosition[1]);
+                    deviceResult.put("message", "Estimated location computed using fallback method.");
+                }
+            }
+
+            devicesResults.add(deviceResult);
+        }
+
+        if (devicesResults.isEmpty()) {
+            logger.warn("No valid positions could be estimated.");
+            return ResponseEntity.ok("No valid positions could be estimated.");
+        }
+
+        // Prepare final response
+        Map<String, Object> finalResponse = new HashMap<>();
+        finalResponse.put("devices", devicesResults);
+        finalResponse.put("allBeaconsUsed", new ArrayList<>(uniqueBeaconsMap.values()));
+
+        logger.info("Trilateration process completed successfully for {} devices", devicesResults.size());
+        return ResponseEntity.ok(finalResponse);
+    }
+
+
+
+//        for (int i = 0; i < positions.size() - 1; i++) {
+//            PositionSanitized pos1 = positions.get(i);
+//            PositionSanitized pos2 = positions.get(i + 1);
+//
+//            double scanRssi1 = Double.parseDouble(pos1.getAttributes().get("scanRssi"));
+//            double scanRssi2 = Double.parseDouble(pos2.getAttributes().get("scanRssi"));
+//
+//            double rssiDiff = Math.abs(pos1.getRssi() - pos2.getRssi());
+//            double scanRssiDiff = Math.abs(scanRssi1 - scanRssi2);
+//            long timeDiff = Math.abs(ChronoUnit.SECONDS.between(pos1.getDeviceTime(), pos2.getDeviceTime()));
+//
+//            if (rssiDiff <= RSSI_DIFFERENCE_THRESHOLD &&
+//                    scanRssiDiff <= SCAN_RSSI_DIFFERENCE_THRESHOLD &&
+//                    timeDiff <= TIME_DIFFERENCE_SECONDS) {
+//
+//                List<BeaconEntity> beacons = beaconRepository.findByNameIn(List.of(pos1.getBeaconName(), pos2.getBeaconName()));
+//
+//                if (beacons.size() == 2) {
+//                    BeaconEntity beacon1 = beacons.get(0);
+//                    BeaconEntity beacon2 = beacons.get(1);
+//
+//                    double distance = calculateDistance(beacon1.getLatitude(), beacon1.getLongitude(),
+//                            beacon2.getLatitude(), beacon2.getLongitude());
+//
+//                    System.out.println("The cow is in between beacons " + pos1.getBeaconName() + " and " + pos2.getBeaconName());
+//                    System.out.println("Distance: " + distance);
+//                    System.out.println("RSSI Difference: " + rssiDiff);
+//
+//                    // Prioritize based on distance first, then RSSI difference
+//                    if (distance < minDistance ||
+//                            (distance == minDistance && rssiDiff < minRssiDifference) ||
+//                            (distance == minDistance && rssiDiff == minRssiDifference &&
+//                                    pos2.getDeviceTime().isAfter(bestMatches.get(1).getDeviceTime()))) {
+//
+//                        minDistance = distance;
+//                        minRssiDifference = rssiDiff;
+//                        bestMatches.clear();
+//                        bestMatches.add(pos1);
+//                        bestMatches.add(pos2);
+//                    }
+//                }
+//            }
+//        }
+//

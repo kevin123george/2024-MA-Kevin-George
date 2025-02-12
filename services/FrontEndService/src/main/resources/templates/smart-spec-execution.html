@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{base}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Log Streaming</title>
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 20px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .card h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .status-badge {
+            background-color: green;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .status-badge.in-progress {
+            background-color: orange;
+        }
+
+        .btn {
+            background-color: #374151;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .btn:disabled {
+            background-color: grey;
+            cursor: not-allowed;
+        }
+
+        .btn:hover:not(:disabled) {
+            background-color: #111827;
+        }
+
+        #logs-container {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        .log-item {
+            padding: 5px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .log-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div class="container">
+        <!-- First Card -->
+        <div class="card">
+            <span class="status-badge" hx-get="http://localhost:8080/api/learning/status"
+                  hx-swap="innerHTML"
+                  hx-trigger="load, every 5s"
+                  id="status1">Completed</span>
+            <div>
+                <h2 class="card-title">Scenario-Learning</h2>
+                <p>This stage executes the Scenario-Learning component to generate a model out of the input data stored
+                    in the database.
+                    It analyses the structure and diversity of the data to create a representation of the entities'
+                    behavior.</p>
+            </div>
+            <div class="card-actions">
+                <button class="btn"
+                        hx-on="htmx:afterRequest: setButtonState(this, 'status1')"
+                        hx-post="http://localhost:8080/api/learning/start"
+                        hx-swap="outerHTML"
+                        hx-target="#status1"
+                        hx-trigger="click"
+                        id="button1"
+                >Start Scenario-Learning
+                </button>
+            </div>
+        </div>
+
+        <!-- Second Card -->
+        <div class="card">
+            <span class="status-badge" hx-get="http://localhost:8080/api/generation/status"
+                  hx-swap="innerHTML"
+                  hx-trigger="load, every 5s"
+                  id="status2">Completed</span>
+            <div>
+                <h2 class="card-title">Scenario-Generation</h2>
+                <p>This stage executes the Scenario-Generation component which uses the previously trained model to
+                    generate new data.
+                    The output are simulated locations of generated entities.</p>
+            </div>
+            <div class="card-actions">
+                <button class="btn"
+                        hx-on="htmx:afterRequest: setButtonState(this, 'status2')"
+                        hx-post="http://localhost:8080/api/generation/start"
+                        hx-swap="outerHTML"
+                        hx-target="#status2"
+                        hx-trigger="click"
+                        id="button2"
+                >Start Scenario-Generation
+                </button>
+            </div>
+        </div>
+
+        <!-- Third Card -->
+        <div class="card">
+            <div>
+                <h2 class="card-title">Persist Result</h2>
+                <p>After the Scenario-Generation has finished, the result can be persisted in the database and
+                    afterwards viewed on the map in the tab "Map View".</p>
+            </div>
+            <div class="card-actions">
+                <button class="btn"
+                        hx-on="htmx:afterRequest: setButtonState(this, 'status3')"
+                        hx-post="http://localhost:8080/api/generation/persist"
+                        hx-swap="outerHTML"
+                        hx-target="#status3"
+                        hx-trigger="click"
+                        id="button3"
+                >Persist Result
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+
+    <div class="mockup-code">
+        <h1>Streaming Logs</h1>
+        <div id="logs-container">
+            <div id="logs"></div>
+        </div>
+        <script>
+            // JavaScript to handle SSE for log streaming
+            function startLogStream() {
+                var eventSource = new EventSource('/log-streaming'); // The controller will handle this URL
+
+                // Array to hold the last 50 log lines
+                var logs = [];
+
+                eventSource.onmessage = function(event) {
+                    var logLine = event.data;
+
+                    // Add new log line to the array
+                    logs.push(logLine);
+
+                    // Keep only the last 50 lines
+                    if (logs.length > 50) {
+                        logs.shift(); // Remove the first (oldest) line if more than 50 lines
+                    }
+
+                    // Update the displayed logs
+                    var logContainer = document.getElementById('logs');
+                    logContainer.innerHTML = ''; // Clear the container before updating
+
+                    // Add each log line as a styled div
+                    logs.forEach(function(log) {
+                        var logItem = document.createElement('div');
+                        logItem.className = 'log-item';
+                        logItem.textContent = log;
+                        logContainer.appendChild(logItem);
+                    });
+
+                    // Auto-scroll to the bottom of the parent container
+                    var logsContainer = document.getElementById('logs-container');
+                    logsContainer.scrollTop = logsContainer.scrollHeight;
+                };
+
+                eventSource.onerror = function(error) {
+                    console.error("Error in log streaming", error);
+                    eventSource.close();
+                };
+            }
+
+            window.onload = startLogStream; // Start the stream when the page loads
+        </script>
+    </div>
+    <script>
+        function setButtonState(button, statusId) {
+            const statusText = document.getElementById(statusId).innerText.trim();
+            if (statusText === 'IN_PROGRESS') {
+                button.disabled = true;
+            } else {
+                button.disabled = false;
+            }
+        }
+    </script>
+
+</div>
+
+</body>
+</html>

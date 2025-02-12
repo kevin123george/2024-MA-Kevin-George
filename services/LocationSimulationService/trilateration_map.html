@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_6e1a38ea07df268fa434c03fa8bf2a78 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_6e1a38ea07df268fa434c03fa8bf2a78" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_6e1a38ea07df268fa434c03fa8bf2a78 = L.map(
+                "map_6e1a38ea07df268fa434c03fa8bf2a78",
+                {
+                    center: [49.68160087246851, 12.199210661418784],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 20,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_d044e3b3cfe5599ffa8f9726c0c0e8a5 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detectRetina": false, "maxNativeZoom": 19, "maxZoom": 25, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+        
+    
+            tile_layer_d044e3b3cfe5599ffa8f9726c0c0e8a5.addTo(map_6e1a38ea07df268fa434c03fa8bf2a78);
+        
+    
+            var marker_94012ccc75a78220f32d92192d894abf = L.marker(
+                [49.681604348471495, 12.199194191858536],
+                {}
+            ).addTo(map_6e1a38ea07df268fa434c03fa8bf2a78);
+        
+    
+            var icon_4497d8ee952f800cba0c8f78645373f4 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_94012ccc75a78220f32d92192d894abf.setIcon(icon_4497d8ee952f800cba0c8f78645373f4);
+        
+    
+        var popup_eca6aee30e349a9a985c00ba3ef276dc = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_a6071eecb7f5222eb26ea0c4025d0b2a = $(`<div id="html_a6071eecb7f5222eb26ea0c4025d0b2a" style="width: 100.0%; height: 100.0%;">Beacon: W10T_A7H_B-1-7<br>(12.199194191858536, 49.681604348471495)<br><a href="https://www.google.com/maps/search/?api=1&query=49.681604348471495,12.199194191858536" target="_blank">Open in Google Maps</a></div>`)[0];
+                popup_eca6aee30e349a9a985c00ba3ef276dc.setContent(html_a6071eecb7f5222eb26ea0c4025d0b2a);
+            
+        
+
+        marker_94012ccc75a78220f32d92192d894abf.bindPopup(popup_eca6aee30e349a9a985c00ba3ef276dc)
+        ;
+
+        
+    
+    
+            var marker_79a5495c638a7ec5d21a53e65ce2664d = L.marker(
+                [49.68155539409804, 12.199236814182555],
+                {}
+            ).addTo(map_6e1a38ea07df268fa434c03fa8bf2a78);
+        
+    
+            var icon_ae499d59aec23b6e1945083a5b718c02 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_79a5495c638a7ec5d21a53e65ce2664d.setIcon(icon_ae499d59aec23b6e1945083a5b718c02);
+        
+    
+        var popup_aa63582999d0c69f2cdcb66becfa2776 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_e8bf5ddf522ed372dd6dfb34b39289cc = $(`<div id="html_e8bf5ddf522ed372dd6dfb34b39289cc" style="width: 100.0%; height: 100.0%;">Beacon: W10T_A7H_B-1-6<br>(12.199236814182555, 49.68155539409804)<br><a href="https://www.google.com/maps/search/?api=1&query=49.68155539409804,12.199236814182555" target="_blank">Open in Google Maps</a></div>`)[0];
+                popup_aa63582999d0c69f2cdcb66becfa2776.setContent(html_e8bf5ddf522ed372dd6dfb34b39289cc);
+            
+        
+
+        marker_79a5495c638a7ec5d21a53e65ce2664d.bindPopup(popup_aa63582999d0c69f2cdcb66becfa2776)
+        ;
+
+        
+    
+    
+            var marker_e419207ecfa0adc03d1f47440b140634 = L.marker(
+                [49.681617979072655, 12.199194878339767],
+                {}
+            ).addTo(map_6e1a38ea07df268fa434c03fa8bf2a78);
+        
+    
+            var icon_a6d3bce83eac484047f1c272ba87203e = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_e419207ecfa0adc03d1f47440b140634.setIcon(icon_a6d3bce83eac484047f1c272ba87203e);
+        
+    
+        var popup_f411d214d25690d82a25e11cab5c3e97 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_1cd075cc3e746489bb583a6ff3789867 = $(`<div id="html_1cd075cc3e746489bb583a6ff3789867" style="width: 100.0%; height: 100.0%;">Beacon: W10T_A7H_B-1-19 Tränke<br>(12.199194878339767, 49.681617979072655)<br><a href="https://www.google.com/maps/search/?api=1&query=49.681617979072655,12.199194878339767" target="_blank">Open in Google Maps</a></div>`)[0];
+                popup_f411d214d25690d82a25e11cab5c3e97.setContent(html_1cd075cc3e746489bb583a6ff3789867);
+            
+        
+
+        marker_e419207ecfa0adc03d1f47440b140634.bindPopup(popup_f411d214d25690d82a25e11cab5c3e97)
+        ;
+
+        
+    
+    
+            var marker_1c13df8aff2b6f091254fb4ada4a4ba9 = L.marker(
+                [49.68162576823184, 12.199216761294274],
+                {}
+            ).addTo(map_6e1a38ea07df268fa434c03fa8bf2a78);
+        
+    
+            var icon_7278e173e03d88b46b61e51e8a87baca = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "star", "iconColor": "white", "markerColor": "green", "prefix": "glyphicon"}
+            );
+            marker_1c13df8aff2b6f091254fb4ada4a4ba9.setIcon(icon_7278e173e03d88b46b61e51e8a87baca);
+        
+    
+        var popup_396f57de230663640e9d908d47c098dd = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_bc33e77488dfeff220b63ace1f644bb6 = $(`<div id="html_bc33e77488dfeff220b63ace1f644bb6" style="width: 100.0%; height: 100.0%;">Closest Beacon: W10T_A7H_B-1-7<br>(12.199216761294274, 49.68162576823184)<br><a href="https://www.google.com/maps/search/?api=1&query=49.68162576823184,12.199216761294274" target="_blank">Open in Google Maps</a></div>`)[0];
+                popup_396f57de230663640e9d908d47c098dd.setContent(html_bc33e77488dfeff220b63ace1f644bb6);
+            
+        
+
+        marker_1c13df8aff2b6f091254fb4ada4a4ba9.bindPopup(popup_396f57de230663640e9d908d47c098dd)
+        ;
+
+        
+    
+</script>
+</html>

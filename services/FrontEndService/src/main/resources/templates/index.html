@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{base}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Thesis Information</title>
+    <!-- Tailwind CSS for styling -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="p-6" layout:fragment="content">
+    <div class="flex flex-col items-center">
+        <h1 class="text-4xl font-bold mb-4 text-primary">Thesis Information</h1>
+        <h2 class="text-2xl mb-6 text-secondary">Developing a Data-Driven Platform for Enhanced Cattle Farm Management</h2>
+
+        <section class="w-full max-w-4xl bg-base-200 p-6 rounded-lg shadow-lg">
+            <h3 class="text-xl font-semibold mb-4 text-primary-focus">Motivation</h3>
+            <p>
+                Advancing smart agriculture through the use of real sensor data is crucial for improving farm management,
+                animal welfare, and resource optimization. This project focuses on leveraging sensor data to enhance
+                operations, ensure animal welfare, and manage resources more effectively.
+            </p>
+        </section>
+
+        <section class="w-full max-w-4xl bg-base-200 p-6 mt-6 rounded-lg shadow-lg">
+            <h3 class="text-xl font-semibold mb-4 text-primary-focus">Problem Statement</h3>
+            <p>
+                Modern cattle farming faces significant challenges, including inefficient resource management, insufficient
+                monitoring tools, and high costs. Our platform aims to address these issues by integrating sensor data,
+                offering advanced analytics, and enabling anomaly detection tailored for cattle farming.
+            </p>
+        </section>
+
+        <section class="w-full max-w-4xl bg-base-200 p-6 mt-6 rounded-lg shadow-lg">
+            <h3 class="text-xl font-semibold mb-4 text-primary-focus">Key Features</h3>
+            <ul class="list-disc list-inside">
+                <li>Real-time livestock monitoring through BLE and mioty sensors.</li>
+                <li>Advanced anomaly detection using machine learning algorithms.</li>
+                <li>Data visualization through interactive dashboards and reports.</li>
+                <li>Simulation capabilities for predictive modeling and scenario analysis.</li>
+                <li>Centralized PostgreSQL database for efficient data management.</li>
+            </ul>
+        </section>
+
+        <section class="w-full max-w-4xl bg-base-200 p-6 mt-6 rounded-lg shadow-lg">
+            <h3 class="text-xl font-semibold mb-4 text-primary-focus">How It Works</h3>
+            <p>
+                The platform collects data from sensors using the WeideInsight system. This data is processed and stored
+                in a PostgreSQL database. An analytics engine performs statistical and machine learning analyses, generating
+                actionable insights. Users can interact with the platform via web dashboards, accessing real-time data,
+                anomaly alerts, and simulation results.
+            </p>
+        </section>
+
+        <section class="w-full max-w-4xl bg-base-200 p-6 mt-6 rounded-lg shadow-lg">
+            <h3 class="text-xl font-semibold mb-4 text-primary-focus">Related Technologies</h3>
+            <ul class="list-disc list-inside">
+                <li><strong>Precision Agriculture:</strong> Leveraging advanced sensors and analytics for smart farming.</li>
+                <li><strong>BLE and mioty:</strong> Short-range and long-range communication technologies for sensor data collection.</li>
+                <li><strong>Machine Learning:</strong> Algorithms for anomaly detection and predictive modeling.</li>
+                <li><strong>Semantic Web:</strong> Integrating diverse data sources for enhanced interoperability.</li>
+            </ul>
+        </section>
+
+        <section class="w-full max-w-4xl bg-base-200 p-6 mt-6 rounded-lg shadow-lg">
+            <h3 class="text-xl font-semibold mb-4 text-primary-focus">Contact Information</h3>
+            <p>
+                For more details about this project, please contact the researcher:
+            </p>
+            <p>
+                <strong>Name:</strong> Kevin George<br>
+                <strong>Email:</strong> kevin.george@example.com<br>
+                <strong>Affiliation:</strong> University of Bamberg
+            </p>
+        </section>
+    </div>
+</div>
+</body>
+</html>

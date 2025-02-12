@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{base}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Alert Configurations</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js" defer></script>
+</head>
+<body>
+<div  layout:fragment="content" x-data="alertTable()">
+    <h1 >Alert Configurations</h1>
+
+    <!-- Enhanced Table -->
+    <div class=" rounded-lg shadow overflow-hidden">
+        <table class="table w-full">
+            <thead>
+            <tr>
+                <th class="cursor-pointer" @click="sortBy('id')">
+                    ID
+                    <span x-show="sortField === 'id'" x-text="sortDirection === 'asc' ? '↑' : '↓'"></span>
+                </th>
+                <th class="cursor-pointer" @click="sortBy('positionId')">
+                    Position ID
+                    <span x-show="sortField === 'positionId'" x-text="sortDirection === 'asc' ? '↑' : '↓'"></span>
+                </th>
+                <th class="cursor-pointer" @click="sortBy('message')">
+                    Message
+                    <span x-show="sortField === 'message'" x-text="sortDirection === 'asc' ? '↑' : '↓'"></span>
+                </th>
+                <th class="cursor-pointer" @click="sortBy('timestamp')">
+                    Timestamp
+                    <span x-show="sortField === 'timestamp'" x-text="sortDirection === 'asc' ? '↑' : '↓'"></span>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <template x-for="alert in paginatedAlerts()" :key="alert.id">
+                <tr class="hover">
+                    <td x-text="alert.id"></td>
+                    <td x-text="alert.positionId"></td>
+                    <td x-text="alert.message"></td>
+                    <td x-text="formatDate(alert.timestamp)"></td>
+                </tr>
+            </template>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Enhanced Pagination -->
+    <div class="mt-4 flex justify-between items-center bg-white p-4 rounded-lg shadow">
+        <button
+                class="btn btn-outline"
+                @click="prevPage()"
+                :disabled="currentPage === 1">
+            Previous
+        </button>
+        <div class="flex items-center space-x-2">
+            <span>Page</span>
+            <select
+                    class="select select-bordered"
+                    x-model="currentPage">
+                <template x-for="page in totalPages()" :key="page">
+                    <option :value="page" x-text="page"></option>
+                </template>
+            </select>
+            <span>of <span x-text="totalPages()"></span></span>
+        </div>
+        <button
+                class="btn btn-outline"
+                @click="nextPage()"
+                :disabled="currentPage === totalPages()">
+            Next
+        </button>
+    </div>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+
+  # Data Injection Service
+  data-injection-service:
+    build: ./DataInjectionService
+    ports:
+      - "9091:9091"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://host.docker.internal:5432/${DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_REDIS_HOST: redis  # Redis host
+      SPRING_REDIS_PORT: 6379  # Redis port
+
+  # Watcher Pattern Service
+  watcher-pattern-service:
+    build: ./WatcherPatternService
+    ports:
+      - "9092:9092"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://host.docker.internal:5432/${DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_REDIS_HOST: redis  # Redis host
+      SPRING_REDIS_PORT: 6379  # Redis port
+
+  # Location Simulation Service
+  location-simulation-service:
+    build: ./LocationSimulationService
+    ports:
+      - "9094:9094"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://host.docker.internal:5432/${DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_REDIS_HOST: redis  # Redis host
+      SPRING_REDIS_PORT: 6379  # Redis port
+
+  # Front-End Service
+  front-end-service:
+    build: ./FrontEndService
+    ports:
+      - "9090:9090"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://host.docker.internal:5432/${DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_REDIS_HOST: redis  # Redis host
+      SPRING_REDIS_PORT: 6379  # Redis port
+
+  # DataBaseMigrationService Service
+  data-base-migration-service:
+    build: ./DataBaseMigrationService
+    ports:
+      - "9095:9095"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://host.docker.internal:5432/${DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+
+
+  # Metabase Service
+  metabase:
+    image: metabase/metabase
+    container_name: metabase
+    environment:
+      - MB_DB_TYPE=postgres
+      - MB_DB_DBNAME=metabase              # Your local database name
+      - MB_DB_PORT=5432                     # Local PostgreSQL port
+      - MB_DB_USER=postgres                 # Local PostgreSQL user
+      - MB_DB_PASS=asdf1234                 # Local PostgreSQL password
+      - MB_DB_HOST=host.docker.internal     # Connect to the local PostgreSQL instance from inside Docker
+    ports:
+      - "3001:3000"  # Metabase UI will be available at http://localhost:3001
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+
+volumes:
+  redis-data:

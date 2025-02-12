@@ -1,0 +1,432 @@
+[
+  {
+    "id": 560308606,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:06:03.364+00:00",
+    "deviceId": 509554898,
+    "rssi": -76,
+    "": "",
+    "beaconId": 509542378,
+    "beaconName": "W10T_A7H_B-1-7"
+  },
+  {
+    "id": 560308605,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:06:03.364+00:00",
+    "deviceId": 509554898,
+    "rssi": -73,
+    "": "",
+    "beaconId": 509542314,
+    "beaconName": "W10T_A7H_B-1-6"
+  },
+  {
+    "id": 560308661,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:06:11.239+00:00",
+    "deviceId": 509554898,
+    "rssi": -75,
+    "": "",
+    "beaconId": 509558438,
+    "beaconName": "W10T_A7H_B-1-10"
+  },
+  {
+    "id": 560308660,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:06:11.239+00:00",
+    "deviceId": 509554898,
+    "rssi": -73,
+    "": "",
+    "beaconId": 509542097,
+    "beaconName": "W10T_A7H_B-1-2"
+  },
+  {
+    "id": 560308711,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:06:18.343+00:00",
+    "deviceId": 509554898,
+    "rssi": -73,
+    "": "",
+    "beaconId": 509542378,
+    "beaconName": "W10T_A7H_B-1-7"
+  },
+  {
+    "id": 560308709,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:06:18.343+00:00",
+    "deviceId": 509554898,
+    "rssi": -74,
+    "": "",
+    "beaconId": 509559720,
+    "beaconName": "W10T_A7H_B-1-19 Tränke"
+  },
+  {
+    "id": 560308766,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:06:27.460+00:00",
+    "deviceId": 509554898,
+    "rssi": -72,
+    "": "",
+    "beaconId": 509558438,
+    "beaconName": "W10T_A7H_B-1-10"
+  },
+  {
+    "id": 560308765,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:06:27.460+00:00",
+    "deviceId": 509554898,
+    "rssi": -72,
+    "": "",
+    "beaconId": 509542378,
+    "beaconName": "W10T_A7H_B-1-7"
+  },
+  {
+    "id": 560308764,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:06:27.460+00:00",
+    "deviceId": 509554898,
+    "rssi": -74,
+    "": "",
+    "beaconId": 509542097,
+    "beaconName": "W10T_A7H_B-1-2"
+  },
+  {
+    "id": 560308806,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:06:32.553+00:00",
+    "deviceId": 509554898,
+    "rssi": -72,
+    "": "",
+    "beaconId": 509559720,
+    "beaconName": "W10T_A7H_B-1-19 Tränke"
+  },
+  {
+    "id": 560308805,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:06:32.553+00:00",
+    "deviceId": 509554898,
+    "rssi": -75,
+    "": "",
+    "beaconId": 509542378,
+    "beaconName": "W10T_A7H_B-1-7"
+  },
+  {
+    "id": 560308804,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:06:32.553+00:00",
+    "deviceId": 509554898,
+    "rssi": -75,
+    "": "",
+    "beaconId": 509542097,
+    "beaconName": "W10T_A7H_B-1-2"
+  },
+  {
+    "id": 560308859,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:06:42.668+00:00",
+    "deviceId": 509554898,
+    "rssi": -76,
+    "": "",
+    "beaconId": 509542097,
+    "beaconName": "W10T_A7H_B-1-2"
+  },
+  {
+    "id": 560308858,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:06:42.668+00:00",
+    "deviceId": 509554898,
+    "rssi": -75,
+    "": "",
+    "beaconId": 509559720,
+    "beaconName": "W10T_A7H_B-1-19 Tränke"
+  },
+  {
+    "id": 560308857,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:06:42.668+00:00",
+    "deviceId": 509554898,
+    "rssi": -76,
+    "": "",
+    "beaconId": 509542378,
+    "beaconName": "W10T_A7H_B-1-7"
+  },
+  {
+    "id": 560308881,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:06:48.777+00:00",
+    "deviceId": 509554898,
+    "rssi": -75,
+    "": "",
+    "beaconId": 509558438,
+    "beaconName": "W10T_A7H_B-1-10"
+  },
+  {
+    "id": 560308922,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:06:53.869+00:00",
+    "deviceId": 509554898,
+    "rssi": -74,
+    "": "",
+    "beaconId": 509559720,
+    "beaconName": "W10T_A7H_B-1-19 Tränke"
+  },
+  {
+    "id": 560308921,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:06:53.869+00:00",
+    "deviceId": 509554898,
+    "rssi": -72,
+    "": "",
+    "beaconId": 509558438,
+    "beaconName": "W10T_A7H_B-1-10"
+  },
+  {
+    "id": 560308970,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:07:01.983+00:00",
+    "deviceId": 509554898,
+    "rssi": -73,
+    "": "",
+    "beaconId": 509542378,
+    "beaconName": "W10T_A7H_B-1-7"
+  },
+  {
+    "id": 560308968,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:07:01.983+00:00",
+    "deviceId": 509554898,
+    "rssi": -75,
+    "": "",
+    "beaconId": 509542097,
+    "beaconName": "W10T_A7H_B-1-2"
+  },
+  {
+    "id": 560309045,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:07:08.078+00:00",
+    "deviceId": 509554898,
+    "rssi": -79,
+    "": "",
+    "beaconId": 509542097,
+    "beaconName": "W10T_A7H_B-1-2"
+  },
+  {
+    "id": 560309249,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:07:47.499+00:00",
+    "deviceId": 509554898,
+    "rssi": -72,
+    "": "",
+    "beaconId": 509542378,
+    "beaconName": "W10T_A7H_B-1-7"
+  },
+  {
+    "id": 560309248,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:07:47.499+00:00",
+    "deviceId": 509554898,
+    "rssi": -78,
+    "": "",
+    "beaconId": 509542097,
+    "beaconName": "W10T_A7H_B-1-2"
+  },
+  {
+    "id": 560309287,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:07:54.601+00:00",
+    "deviceId": 509554898,
+    "rssi": -73,
+    "": "",
+    "beaconId": 509542378,
+    "beaconName": "W10T_A7H_B-1-7"
+  },
+  {
+    "id": 560309285,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:07:54.601+00:00",
+    "deviceId": 509554898,
+    "rssi": -72,
+    "": "",
+    "beaconId": 509559720,
+    "beaconName": "W10T_A7H_B-1-19 Tränke"
+  },
+  {
+    "id": 560309412,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:08:09.944+00:00",
+    "deviceId": 509554898,
+    "rssi": -73,
+    "": "",
+    "beaconId": 509542378,
+    "beaconName": "W10T_A7H_B-1-7"
+  },
+  {
+    "id": 560309410,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:08:09.944+00:00",
+    "deviceId": 509554898,
+    "rssi": -73,
+    "": "",
+    "beaconId": 509559720,
+    "beaconName": "W10T_A7H_B-1-19 Tränke"
+  },
+  {
+    "id": 560309413,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:08:09.944+00:00",
+    "deviceId": 509554898,
+    "rssi": -77,
+    "": "",
+    "beaconId": 509542097,
+    "beaconName": "W10T_A7H_B-1-2"
+  },
+  {
+    "id": 560309729,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:09:02.586+00:00",
+    "deviceId": 509554898,
+    "rssi": -75,
+    "": "",
+    "beaconId": 509542097,
+    "beaconName": "W10T_A7H_B-1-2"
+  },
+  {
+    "id": 560309728,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:09:02.586+00:00",
+    "deviceId": 509554898,
+    "rssi": -72,
+    "": "",
+    "beaconId": 509542378,
+    "beaconName": "W10T_A7H_B-1-7"
+  },
+  {
+    "id": 560309727,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:09:02.586+00:00",
+    "deviceId": 509554898,
+    "rssi": -73,
+    "": "",
+    "beaconId": 509559720,
+    "beaconName": "W10T_A7H_B-1-19 Tränke"
+  },
+  {
+    "id": 560309804,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:09:10.696+00:00",
+    "deviceId": 509554898,
+    "rssi": -74,
+    "": "",
+    "beaconId": 509542097,
+    "beaconName": "W10T_A7H_B-1-2"
+  },
+  {
+    "id": 560309803,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:09:10.696+00:00",
+    "deviceId": 509554898,
+    "rssi": -72,
+    "": "",
+    "beaconId": 509558566,
+    "beaconName": "W10T_A7H_B-1-11"
+  },
+  {
+    "id": 560309893,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:09:28.551+00:00",
+    "deviceId": 509554898,
+    "rssi": -72,
+    "": "",
+    "beaconId": 509542097,
+    "beaconName": "W10T_A7H_B-1-2"
+  },
+  {
+    "id": 560309892,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:09:28.551+00:00",
+    "deviceId": 509554898,
+    "rssi": -73,
+    "": "",
+    "beaconId": 509542314,
+    "beaconName": "W10T_A7H_B-1-6"
+  },
+  {
+    "id": 560309891,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:09:28.551+00:00",
+    "deviceId": 509554898,
+    "rssi": -75,
+    "": "",
+    "beaconId": 509559720,
+    "beaconName": "W10T_A7H_B-1-19 Tränke"
+  },
+  {
+    "id": 560309940,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:09:35.656+00:00",
+    "deviceId": 509554898,
+    "rssi": -72,
+    "": "",
+    "beaconId": 509559720,
+    "beaconName": "W10T_A7H_B-1-19 Tränke"
+  },
+  {
+    "id": 560309939,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:09:35.656+00:00",
+    "deviceId": 509554898,
+    "rssi": -72,
+    "": "",
+    "beaconId": 509542314,
+    "beaconName": "W10T_A7H_B-1-6"
+  },
+  {
+    "id": 560309992,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:09:48.569+00:00",
+    "deviceId": 509554898,
+    "rssi": -73,
+    "": "",
+    "beaconId": 509542378,
+    "beaconName": "W10T_A7H_B-1-7"
+  },
+  {
+    "id": 560309991,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:09:48.569+00:00",
+    "deviceId": 509554898,
+    "rssi": -79,
+    "": "",
+    "beaconId": 509542097,
+    "beaconName": "W10T_A7H_B-1-2"
+  },
+  {
+    "id": 560310033,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:09:55.675+00:00",
+    "deviceId": 509554898,
+    "rssi": -78,
+    "": "",
+    "beaconId": 509542097,
+    "beaconName": "W10T_A7H_B-1-2"
+  },
+  {
+    "id": 560310032,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:09:55.675+00:00",
+    "deviceId": 509554898,
+    "rssi": -72,
+    "": "",
+    "beaconId": 509558438,
+    "beaconName": "W10T_A7H_B-1-10"
+  },
+  {
+    "id": 560312453,
+    "deviceName": "142_(W10T_A7H_3)",
+    "timestamp": "2022-04-26T13:16:38.684+00:00",
+    "deviceId": 509554898,
+    "rssi": -73,
+    "": "",
+    "beaconId": 509542378,
+    "beaconName": "W10T_A7H_B-1-7"
+  }
+]

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{base}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Cron Job Configurations</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="p-6" layout:fragment="content">
+    <h1 class="text-2xl font-bold mb-4">Cron Job Configurations</h1>
+
+    <div class="overflow-x-auto">
+        <!-- Existing form for updating cron job configurations -->
+        <form method="post" th:action="@{/cron/update}" th:object="${cronJobConfigWrapper}">
+            <table class="table w-full border-collapse border border-gray-400">
+                <!-- Table header -->
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Job Name</th>
+                    <th>Cron Expression</th>
+                    <th>Fixed Rate (ms)</th>
+                    <th>Enabled</th>
+                </tr>
+                </thead>
+                <!-- Table body -->
+                <tbody>
+                <tr th:each="job, iterStat : ${cronJobConfigWrapper.cronJobConfigs}">
+                    <td th:text="${iterStat.count}">1</td>
+                    <td>
+                        <input th:field="*{cronJobConfigs[__${iterStat.index}__].jobName}" type="hidden"/>
+                        <span th:text="*{cronJobConfigs[__${iterStat.index}__].jobName}"></span>
+                    </td>
+                    <td>
+                        <input class="border rounded p-1" th:field="*{cronJobConfigs[__${iterStat.index}__].cronExpression}"
+                               type="text"/>
+                    </td>
+                    <td>
+                        <input class="border rounded p-1" th:field="*{cronJobConfigs[__${iterStat.index}__].fixedRate}"
+                               type="number"/>
+                    </td>
+                    <td>
+                        <input th:field="*{cronJobConfigs[__${iterStat.index}__].enabled}" type="checkbox"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- Submit button -->
+            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4" type="submit">
+                Update All
+            </button>
+        </form>
+    </div>
+
+    <!-- Section for updating credentials -->
+    <div class="mt-8">
+        <h2 class="text-xl font-semibold mb-4">Update Credentials</h2>
+        <form method="post" th:action="@{/cron/update-cred}" th:object="${credentials}" class="space-y-4">
+            <div>
+                <label for="safectoryAPICred" class="block font-medium mb-1">SafeCTory API Credential:</label>
+                <input id="safectoryAPICred" name="safectoryAPICred" type="text" th:field="*{safectoryAPICred}"
+                       class="border rounded w-full p-2" placeholder="Enter new credential" required>
+            </div>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Update Credential
+            </button>
+        </form>
+
+        <div th:if="${message}" class="mt-4 text-green-600">
+            <p th:text="${message}"></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

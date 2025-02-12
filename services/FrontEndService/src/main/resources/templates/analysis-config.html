@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{base}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Cron Job Configurations</title>
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org/dist/ext/json-enc.js"></script>
+    <!-- Tailwind CSS for styling -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+<div layout:fragment="content">
+
+<div class="p-6">
+    <h1 class="text-2xl font-bold mb-4">Cron Job Configurations</h1>
+
+
+    <!-- Filter -->
+    <div class="mb-4">
+        <label for="filterDropdown" class="block text-gray-700 font-bold mb-2">Filter by Analysis Type:</label>
+        <select id="filterDropdown" class="border border-gray-300 rounded px-4 py-2">
+            <option value="">All</option>
+            <!-- Populate dynamically -->
+        </select>
+    </div>
+
+    <!-- Configurations Grid -->
+    <div id="configurationsGrid" class="hero grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        <!-- Cards populated dynamically -->
+    </div>
+</div>
+
+<!-- Modal -->
+<dialog id="detailsModal" class="modal">
+    <div class="modal-box">
+        <form method="dialog">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onclick="closeModal()">✕</button>
+        </form>
+        <h3 class="text-lg font-bold" id="modalTitle">Configuration Details</h3>
+        <div class="py-4" id="configDetailsGrid">
+            <!-- Configuration details dynamically populated -->
+        </div>
+        <form id="editConfigForm" method="POST">
+            <div class="py-4">
+                <label class="block text-gray-700">Key:</label>
+                <input type="text" name="key" id="editKey" class="border-gray-300 border rounded w-full">
+            </div>
+            <div class="py-4">
+                <label class="block text-gray-700">Value:</label>
+                <input type="text" name="value" id="editValue" class="border-gray-300 border rounded w-full">
+            </div>
+            <div class="py-4">
+                <label class="block text-gray-700">Data Type:</label>
+                <input type="text" name="dataType" id="editDataType" class="border-gray-300 border rounded w-full">
+            </div>
+            <div class="modal-action">
+                <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</dialog>
+
+<script>
+    // Fetch configurations from API and populate the grid
+    fetch('http://localhost:9092/api/configs')
+        .then(response => response.json())
+        .then(configs => {
+            const grid = document.getElementById("configurationsGrid");
+            grid.innerHTML = ""; // Clear existing content
+
+            configs.forEach(config => {
+                const card = document.createElement("div");
+                card.className = "hero bg-base-200 min-h-screen";
+                card.innerHTML = `
+                    <h2>${config.key}</h2>
+                    <p><strong>Value:</strong> ${config.value}</p>
+                    <p><strong>Data Type:</strong> ${config.dataType}</p>
+                    <p>
+                        <strong style="color: #555;">Tag:</strong>
+                        <span style="color: #007BFF;">${config.analysisType.name}</span>
+                    </p>
+                    <button  class="btn btn-outline"
+
+                        onclick='openModal(${JSON.stringify(config)})'>
+                        View Details
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+        })
+        .catch(err => {
+            console.error("Error fetching configurations:", err);
+        });
+
+    // Function to open modal and populate details
+    function openModal(config) {
+        document.getElementById("modalTitle").innerText = `Configuration: ${config.key}`;
+        const detailsGrid = document.getElementById("configDetailsGrid");
+        detailsGrid.innerHTML = `
+            <p><strong>ID:</strong> ${config.id}</p>
+            <p><strong>Description:</strong> ${config.description}</p>
+            <p><strong>Analysis Type:</strong> ${config.analysisType.name}</p>
+        `;
+
+        // Populate form for editing
+        document.getElementById("editKey").value = config.key;
+        document.getElementById("editValue").value = config.value;
+        document.getElementById("editDataType").value = config.dataType;
+
+        // Set form action dynamically
+        const form = document.getElementById("editConfigForm");
+        form.onsubmit = function (e) {
+            e.preventDefault();
+            saveChanges(config.id);
+        };
+
+        document.getElementById("detailsModal").showModal();
+    }
+
+    // Close modal
+    function closeModal() {
+        document.getElementById("detailsModal").close();
+    }
+
+    // Save changes via PUT API call
+    function saveChanges(id) {
+        const key = document.getElementById("editKey").value;
+        const value = document.getElementById("editValue").value;
+        const dataType = document.getElementById("editDataType").value;
+
+        const payload = {
+            key,
+            value,
+            dataType,
+        };
+
+        fetch(`http://localhost:9092/api/configs/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert("Changes saved successfully!");
+                    closeModal();
+                    location.reload(); // Reload grid to reflect changes
+                } else {
+                    alert("Failed to save changes.");
+                }
+            })
+            .catch(err => {
+                console.error("Error saving changes:", err);
+                alert("An error occurred while saving changes.");
+            });
+    }
+
+
+
+
+
+
+    let allConfigs = []; // Store all configurations for filtering
+
+// Fetch configurations from API
+fetch('http://localhost:9092/api/configs')
+    .then(response => response.json())
+    .then(configs => {
+        allConfigs = configs; // Store the fetched configurations
+        populateDropdown(configs); // Populate filter dropdown
+        renderGrid(configs); // Render all configurations
+    })
+    .catch(err => {
+        console.error("Error fetching configurations:", err);
+    });
+
+// Populate the dropdown with unique analysis types
+function populateDropdown(configs) {
+    const dropdown = document.getElementById("filterDropdown");
+    const analysisTypes = [...new Set(configs.map(config => config.analysisType.name))];
+    analysisTypes.forEach(type => {
+        const option = document.createElement("option");
+        option.value = type;
+        option.textContent = type;
+        dropdown.appendChild(option);
+    });
+
+    // Add event listener to filter configurations
+    dropdown.addEventListener("change", () => {
+        const selectedType = dropdown.value;
+        const filteredConfigs = selectedType
+            ? allConfigs.filter(config => config.analysisType.name === selectedType)
+            : allConfigs;
+        renderGrid(filteredConfigs);
+    });
+}
+
+// Render configurations grid
+function renderGrid(configs) {
+    const grid = document.getElementById("configurationsGrid");
+    grid.innerHTML = ""; // Clear existing content
+
+    configs.forEach(config => {
+        const card = document.createElement("div");
+        card.className = "hero bg-base-200";
+        card.innerHTML = `
+            <h2 class="text-xl font-bold mb-2">${config.key}</h2>
+            <p><strong>Value:</strong> ${config.value}</p>
+            <p><strong>Data Type:</strong> ${config.dataType}</p>
+            <p style="font-weight: bold; font-size: 1.2rem; margin: 10px 0;">
+                <strong style="color: #555;">Tag:</strong>
+                <span style="color: #007BFF;">${config.analysisType.name}</span>
+            </p>
+            <button
+                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 mt-4"
+                onclick='openModal(${JSON.stringify(config)})'>
+                View Details
+            </button>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+</script>
+</div>
+</body>
+</html>
