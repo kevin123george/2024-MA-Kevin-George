@@ -1,93 +1,95 @@
-# kevin-george
 
 
+# 2024-MA-Kevin-George: Data-Driven Cattle Farm Management Platform
 
-## Getting started
+This repository contains the codebase for a data-driven cattle farm management platform designed for anomaly detection, analytics, and simulation. The project is built around a microservices architecture and forms the technical backbone of the thesis work by Kevin George.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+## Repository Structure
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.rz.uni-bamberg.de/mobi/theses/kevin-george.git
-git branch -M main
-git push -uf origin main
+2024-MA-Kevin-George/
+├── services/
+│   ├── data-injection-service/
+│   ├── watcher-service/
+│   ├── simulation-service/
+│   └── frontend-service/
+├── docs/
+├── README.md
+└── ...
 ```
 
-## Integrate with your tools
+- **services/**: Contains the core microservices. Each subfolder is an independent Spring Boot application handling a specific responsibility (data ingestion, anomaly detection, simulation, and user interface).
+- **docs/**: Documentation and supporting materials for the project.
 
-- [ ] [Set up project integrations](https://gitlab.rz.uni-bamberg.de/mobi/theses/kevin-george/-/settings/integrations)
+## Prerequisites
 
-## Collaborate with your team
+- Java JDK 11 or higher
+- Maven
+- Docker & Docker Compose (optional for containerized deployments)
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+## Getting Started
 
-## Test and Deploy
+### Clone the Repository
 
-Use the built-in continuous integration in GitLab.
+Clone the repository using Git:
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+```bash
+git clone https://github.com/kevin123george/2024-MA-Kevin-George.git
+cd 2024-MA-Kevin-George
+```
 
-***
+### Navigating to the Services Folder
 
-# Editing this README
+All the core microservices are located within the `services` directory. Change to this directory with:
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+```bash
+cd services
+```
 
-## Suggestions for a good README
+### Running Individual Services
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+Each service is a standalone Spring Boot application. To run a specific service, navigate into its directory and use Maven:
 
-## Name
-Choose a self-explaining name for your project.
+For example, to run the **data-injection-service**:
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+```bash
+cd data-injection-service
+mvn spring-boot:run
+```
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+Repeat the process for other services (e.g., `watcher-service`, `simulation-service`, `frontend-service`).
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+### Running the Entire Platform with Docker Compose
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+If you prefer to run all services together using Docker, ensure Docker and Docker Compose are installed. From the root directory of the repository, execute:
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+```bash
+docker-compose up --build
+```
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+This command builds and starts all the services, allowing them to communicate via pre-configured networks.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+## Accessing the Application
+
+- **Frontend UI:** Open your browser and navigate to [http://localhost:8080](http://localhost:8080)
+- **Metabase Dashboard (if integrated):** [http://localhost:3000](http://localhost:3000)  
+  *(Credentials for Metabase are specified in the environment configuration.)*
+
+## Application Output
+
+- **Real-Time Data Monitoring:** Live dashboards display cattle positions and sensor readings.
+- **Anomaly Detection:** Alerts are generated when unusual patterns or outliers are detected in the sensor data.
+- **Simulation Results:** The SmartSPEC simulation component allows you to run “what-if” scenarios for improved farm management.
+- **Logs and Metrics:** Service logs are accessible via Docker logs or within each microservice’s console output, aiding in troubleshooting and performance monitoring.
+
+## Testing
+
+Run unit and integration tests for a service with:
+
+```bash
+mvn test
+```
 
 ## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Contributions are welcome! Please fork the repository, create your feature branch, and submit pull requests. For major changes, please open an issue first to discuss what you would like to change.
